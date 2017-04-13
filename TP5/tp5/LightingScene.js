@@ -40,6 +40,7 @@ LightingScene.prototype.init = function(application) {
 	this.lamp = new MyLamp(this, 200, 200);
 	this.clock = new MyClock(this, 12, 1);
 
+	this.test = new MyClockHand(this, 0.4, Math.PI/2);
 	this.boardA = new Plane(this, BOARD_A_DIVISIONS, 0, 1, 0, 1);
 	this.boardB = new Plane(this, BOARD_B_DIVISIONS, 0, 1, 0, 1);
 
@@ -218,7 +219,7 @@ LightingScene.prototype.display = function() {
 		this.wallpaper.apply();
 		this.wall.display();
 	this.popMatrix();
-
+/*
 	// First Table
 	this.pushMatrix();
 		this.translate(5, 0, 8);
@@ -272,7 +273,7 @@ LightingScene.prototype.display = function() {
 		this.lampMaterial.apply();
 		this.lamp.display();
 	this.popMatrix();
-
+*/
 	// Floor
 	this.pushMatrix();
 		this.translate(7.5, 0, 7.5);
@@ -288,5 +289,9 @@ LightingScene.prototype.display = function() {
 		this.scale(0.7, 0.7, 0.2);
 		this.clock.display();
 	this.popMatrix();
+
+	/*this.pushMatrix();
+		this.test.display();
+	this.popMatrix();*/
 	// ---- END Primitive drawing section
 };

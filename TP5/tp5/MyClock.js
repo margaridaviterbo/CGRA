@@ -7,13 +7,13 @@
 
 	this.cylinder = new MyCylinder(scene, slices, stacks);
 	this.base = new MyCylinderBase(scene, slices);
-    this.hourPointer = new MyClockHand(scene);/*
-    this.minutePointer = new MyClockHand(scene);
-    this.secondPointer = new MyClockHand(scene);*/
+    this.hourPointer = new MyClockHand(scene, 0.4);
+    this.minutePointer = new MyClockHand(scene, 0.6);
+    this.secondPointer = new MyClockHand(scene, 0.8);
 
-    /*this.hourPointer.setAngle(90);
+    this.hourPointer.setAngle(90);
     this.minutePointer.setAngle(180);
-    this.secondPointer.setAngle(270);*/
+    this.secondPointer.setAngle(270);
 
     this.materialRelogio = new CGFappearance(scene);
 	this.materialRelogio.setAmbient(0.3, 0.3, 0.3, 1);
@@ -36,28 +36,25 @@ MyClock.prototype.constructor = MyClock;
 MyClock.prototype.display = function(){
 
     //ponteiro das horas
-    /*this.scene.pushMatrix();
-        this.scene.translate(0, 0.2, 1.1);
-        this.scene.scale(0.07, 0.4, 1);
+    this.scene.pushMatrix();
+        this.scene.translate(0, 0, 1.1);
         this.black.apply();
         this.hourPointer.display();
     this.scene.popMatrix();
 
     //ponteiro dos minutos
     this.scene.pushMatrix();
-        this.scene.translate(0, 0.3, 1.1);
-        this.scene.scale(0.06, 0.65, 1);
+        this.scene.translate(0, 0, 1.1);
         this.black.apply();
         this.minutePointer.display();
     this.scene.popMatrix();
-
+    
     //ponteiro dos segundos
-    this.scene.pushMatrix();
-        this.scene.translate(0, 0.4, 1.1);
-        this.scene.scale(0.05, 0.9, 1);
+     this.scene.pushMatrix();
+        this.scene.translate(0, 0, 1.1);
         this.black.apply();
-        this.minutePointer.display();
-    this.scene.popMatrix();*/
+        this.secondPointer.display();
+    this.scene.popMatrix();
 
     //cilindro
     this.scene.pushMatrix();
