@@ -39,8 +39,6 @@ LightingScene.prototype.init = function(application) {
 	this.cylinder = new MyCylinder(this, 8, 20);
 	this.lamp = new MyLamp(this, 200, 200);
 	this.clock = new MyClock(this, 12, 1);
-
-	this.test = new MyClockHand(this, 0.4, Math.PI/2);
 	this.boardA = new Plane(this, BOARD_A_DIVISIONS, 0, 1, 0, 1);
 	this.boardB = new Plane(this, BOARD_B_DIVISIONS, 0, 1, 0, 1);
 
@@ -110,6 +108,7 @@ LightingScene.prototype.init = function(application) {
 	this.boardAppearance.setShininess(200);
 	this.boardAppearance.loadTexture('../resources/images/board.png');
 
+	this.setUpdatePeriod(100);
 	
 };
 
@@ -174,8 +173,11 @@ LightingScene.prototype.initLights = function() {
 LightingScene.prototype.updateLights = function() {
 	for (i = 0; i < this.lights.length; i++)
 		this.lights[i].update();
-}
+};
 
+LightingScene.prototype.update = function(currTime){
+	this.clock.update(currTime);
+};
 
 LightingScene.prototype.display = function() {
 	// ---- BEGIN Background, camera and axis setup
@@ -290,8 +292,5 @@ LightingScene.prototype.display = function() {
 		this.clock.display();
 	this.popMatrix();
 
-	/*this.pushMatrix();
-		this.test.display();
-	this.popMatrix();*/
 	// ---- END Primitive drawing section
 };

@@ -7,13 +7,15 @@
 
 	this.cylinder = new MyCylinder(scene, slices, stacks);
 	this.base = new MyCylinderBase(scene, slices);
-    this.hourPointer = new MyClockHand(scene, 0.4);
-    this.minutePointer = new MyClockHand(scene, 0.6);
-    this.secondPointer = new MyClockHand(scene, 0.8);
+    this.hourPointer = new MyClockHand(scene, 0.4, 0.05);
+    this.minutePointer = new MyClockHand(scene, 0.6, 0.04);
+    this.secondPointer = new MyClockHand(scene, 0.8, 0.03);
 
     this.hourPointer.setAngle(90);
     this.minutePointer.setAngle(180);
     this.secondPointer.setAngle(270);
+
+    this.timePassed = 0;
 
     this.materialRelogio = new CGFappearance(scene);
 	this.materialRelogio.setAmbient(0.3, 0.3, 0.3, 1);
@@ -32,6 +34,21 @@
 
 MyClock.prototype = Object.create(CGFobject.prototype);
 MyClock.prototype.constructor = MyClock;
+
+MyClock.prototype.update = function(currTime){
+
+    var dif = currTime - this.timePassed;
+
+    //segundos
+    var angle = dif * 2* Math.PI / 1000;
+    this.secondPointer.setAngle(angle);
+
+    //minutos
+    angle = dif * 2 * Math.PI / (60 * 1000);
+    this.minutePointer.setAngle(angle);
+
+    this.timePassed = currTime;
+};
 
 MyClock.prototype.display = function(){
 
