@@ -47,6 +47,10 @@ MyClock.prototype.update = function(currTime){
     angle = dif * 2 * Math.PI / (60 * 1000);
     this.minutePointer.setAngle(angle);
 
+    //horas
+    angle = dif * 2 * Math.PI / (60 * 60 * 1000);
+    this.hourPointer.setAngle(angle);
+
     this.timePassed = currTime;
 };
 
