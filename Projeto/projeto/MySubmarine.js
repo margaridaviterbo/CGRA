@@ -6,12 +6,10 @@
  	CGFobject.call(this,scene);
 
     this.cylinder = new MyCylinder(scene, 20, 1);
-    this.cylinderInsideOut = new MyCylinderInsideOut(scene, 20, 1);
     this.semiSphere = new MySemiSphere(scene, 20, 20);
     this.base = new MyCylinderBase(scene, 20);
-    this.prism = new MyPrism(scene, 4, 1);
-
-    this.triangle = new MyTriangle(scene);
+    this.propeller = new MyPropeller(scene);
+    this.trapezium = new MyTrapezium(scene);
 
     this.rotationAngle = Math.PI*4/5;
 
@@ -24,7 +22,7 @@ MySubmarine.prototype.constructor = MySubmarine;
 
 MySubmarine.prototype.display = function(){
 
-    /*//cilindro principal
+    //cilindro principal
     this.scene.pushMatrix();
         this.scene.translate(0, 0, -2.04);
         this.scene.scale(0.73/2, 1/2, 4.08);
@@ -39,7 +37,7 @@ MySubmarine.prototype.display = function(){
         this.semiSphere.display();
     this.scene.popMatrix();
 
-    //semiEsfera frontal
+    //semiEsfera traseira
     this.scene.pushMatrix();
         this.scene.translate(0, 0, -2.04);
         this.scene.rotate(Math.PI, 0, 1, 0);
@@ -87,7 +85,47 @@ MySubmarine.prototype.display = function(){
                 this.base.display();
             this.scene.popMatrix();
         this.scene.popMatrix();
-   this.scene.popMatrix();*/
+    this.scene.popMatrix();
+
+    //helice direita
+    this.scene.pushMatrix();
+        this.scene.translate(0.73/2+0.4/2, -0.25, -2.04);
+        this.scene.scale(0.4/2, 0.4/2, 0.4);
+        this.scene.translate(0, 0, 0.5);
+        this.propeller.display();
+    this.scene.popMatrix();
+
+    //helice esquerda
+    this.scene.pushMatrix();
+        this.scene.translate(-0.73/2-0.4/2, -0.25, -2.04);
+        this.scene.scale(0.4/2, 0.4/2, 0.4);
+        this.scene.translate(0, 0, 0.5);
+        this.propeller.display();
+    this.scene.popMatrix();
+
+    //trapezio tras horizontal
+    this.scene.pushMatrix();
+        this.scene.translate(0, 0, -2.04);
+        this.scene.scale(2.34, 1, 1); //algo errado...
+        this.trapezium.display();
+    this.scene.popMatrix();
+
+    //trapezio tras vertical
+    this.scene.pushMatrix();
+        this.scene.translate(0, 0, -2.04);
+        this.scene.rotate(Math.PI/2, 0, 0, 1);
+        this.scene.scale(2.34, 1, 1);
+        this.trapezium.display();
+    this.scene.popMatrix();
+
+    //trapezio frente
+    this.scene.pushMatrix();
+        this.scene.translate(0, 0.7, 0.5);
+        this.scene.rotate(Math.PI, 1, 0, 0);
+        this.scene.scale(1.42, 1, 1);
+        this.trapezium.display();
+    this.scene.popMatrix();
+
 }
 
 MySubmarine.prototype.rotate = function(orientation){

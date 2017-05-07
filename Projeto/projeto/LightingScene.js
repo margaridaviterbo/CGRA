@@ -199,8 +199,8 @@ LightingScene.prototype.display = function() {
 
 	// ---- BEGIN Primitive drawing section
 	this.pushMatrix();
-        /*this.translate(this.submarine.positionX, 0, this.submarine.positionZ);
-        this.rotate(this.submarine.rotationAngle, 0, 1, 0);*/
+        this.translate(this.submarine.positionX, 0, this.submarine.positionZ);
+        this.rotate(this.submarine.rotationAngle, 0, 1, 0);
         this.submarine.display();
     this.popMatrix();
 
