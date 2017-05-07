@@ -24,47 +24,51 @@ Plane.prototype.initBuffers = function() {
 	        |
 	0    1  |  2    3
 	        |
-	4	 5	|  6    7
+	4		 5	|  6    7
 	--------|--------------> x
 	8    9  |  10  11
 	        |
-	12  13  |  14  15    
+	12  13  |  14  15
 
 	*/
 
-	// Generate vertices and normals 
+	// Generate vertices and normals
 	this.vertices = [];
 	this.normals = [];
-	
+
 	// Uncomment below to init texCoords
-	//this.texCoords = [];
+	this.texCoords = [];
 
 	var yCoord = 0.5;
+	var tCoord = 0;
 
-	for (var j = 0; j <= this.nrDivs; j++) 
+	for (var j = 0; j <= this.nrDivs; j++)
 	{
 		var xCoord = -0.5;
-		for (var i = 0; i <= this.nrDivs; i++) 
+		var sCoord = 0;
+		for (var i = 0; i <= this.nrDivs; i++)
 		{
 			this.vertices.push(xCoord, yCoord, 0);
-			
+
 			// As this plane is being drawn on the xy plane, the normal to the plane will be along the positive z axis.
 			// So all the vertices will have the same normal, (0, 0, 1).
-			
+
 			this.normals.push(0,0,1);
 
 			// texCoords should be computed here; uncomment and fill the blanks
-			// this.texCoords.push(..., ...);
+			this.texCoords.push(sCoord, tCoord);
 
 			xCoord += this.patchLength;
+			sCoord += this.patchLength;
 		}
 		yCoord -= this.patchLength;
+		tCoord += this.patchLength;
 	}
-	
+
 	// Generating indices
-	/* for nrDivs = 3 output will be 
+	/* for nrDivs = 3 output will be
 		[
-			 0,  4, 1,  5,  2,  6,  3,  7, 
+			 0,  4, 1,  5,  2,  6,  3,  7,
 			    7,  4,
 			 4,  8, 5,  9,  6, 10,  7, 11,
 			   11,  8,
@@ -76,9 +80,9 @@ Plane.prototype.initBuffers = function() {
 	var ind=0;
 
 
-	for (var j = 0; j < this.nrDivs; j++) 
+	for (var j = 0; j < this.nrDivs; j++)
 	{
-		for (var i = 0; i <= this.nrDivs; i++) 
+		for (var i = 0; i <= this.nrDivs; i++)
 		{
 			this.indices.push(ind);
 			this.indices.push(ind+this.nrDivs+1);
@@ -93,14 +97,14 @@ Plane.prototype.initBuffers = function() {
 			this.indices.push(ind);
 		}
 	}
-	
+
 	this.primitiveType = this.scene.gl.TRIANGLE_STRIP;
 
 /* Alternative with TRIANGLES instead of TRIANGLE_STRIP. More indices, but no degenerate triangles */
 /*
-	for (var j = 0; j < this.nrDivs; j++) 
+	for (var j = 0; j < this.nrDivs; j++)
 	{
-		for (var i = 0; i < this.nrDivs; i++) 
+		for (var i = 0; i < this.nrDivs; i++)
 		{
 			this.indices.push(ind, ind+this.nrDivs+1, ind+1);
 			this.indices.push(ind+1, ind+this.nrDivs+1, ind+this.nrDivs+2 );
@@ -115,4 +119,3 @@ Plane.prototype.initBuffers = function() {
 
 	this.initGLBuffers();
 };
-
