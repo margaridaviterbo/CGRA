@@ -11,11 +11,11 @@
     this.propeller = new MyPropeller(scene);
     this.trapezium = new MyTrapezium(scene);
 
-	this.currSubmarineAppearance = 2;
+	this.currSubmarineAppearance;
 
-    this.bodyTextures = {};
+    this.bodyTextures = [];
 
-    this.submarineAppearenceMetal = new CGFappearance(this);
+    this.submarineAppearenceMetal = new CGFappearance(scene);
     this.submarineAppearenceMetal.setAmbient(0.3, 0.3, 0.3, 1);
     this.submarineAppearenceMetal.setDiffuse(0.376, 0.376, 0.376, 1);
     this.submarineAppearenceMetal.setSpecular(1, 1, 1, 1);
@@ -59,32 +59,29 @@
 MySubmarine.prototype = Object.create(CGFobject.prototype);
 MySubmarine.prototype.constructor = MySubmarine;
 
-MySubmarine.prototype.changeTexture = function()
-{
+MySubmarine.prototype.changeTexture = function(){
 
-    console.log(this.scene.textures);
 	if (this.scene.textures == 'Metal') {
-        this.scene.currSubmarineAppearance = 0;
+        this.currSubmarineAppearance = 0;
 	}
-	else if (this.scene.currSubmarineAppearance == 1) {
-        this.scene.currSubmarineAppearance = 1;
+	else if (this.scene.textures == 'Rock') {
+        this.currSubmarineAppearance = 1;
 	}
-    else if (this.scene.currSubmarineAppearance == 2) {
-        this.scene.currSubmarineAppearance = 2;;
+    else if (this.scene.textures == 'Coral') {
+        this.currSubmarineAppearance = 2;;
 	}
-	else {
-        this.scene.currSubmarineAppearance = 3;
+	else{
+        this.currSubmarineAppearance = 3;
 	}
 };
 
 MySubmarine.prototype.display = function(){
 
-    console.log("oioioi" + this.scene.currSubmarineAppearance);
     //cilindro principal
     this.scene.pushMatrix();
         this.scene.translate(0, 0, -2.04);
         this.scene.scale(0.73/2, 1/2, 4.08);
-        this.bodyTextures[this.scene.currSubmarineAppearance].apply();
+        this.bodyTextures[this.currSubmarineAppearance].apply();
         this.cylinder.display();
     this.scene.popMatrix();
 
@@ -93,7 +90,7 @@ MySubmarine.prototype.display = function(){
     this.scene.pushMatrix();
         this.scene.translate(0, 0, 2.04);
         this.scene.scale(0.73/2, 1/2, 0.46);
-        this.bodyTextures[this.scene.currSubmarineAppearance].apply();
+        this.bodyTextures[this.currSubmarineAppearance].apply();
         this.semiSphere.display();
     this.scene.popMatrix();
 
@@ -102,7 +99,7 @@ MySubmarine.prototype.display = function(){
         this.scene.translate(0, 0, -2.04);
         this.scene.rotate(Math.PI, 0, 1, 0);
         this.scene.scale(0.73/2, 1/2, 0.46);
-        this.bodyTextures[this.scene.currSubmarineAppearance].apply();
+        this.bodyTextures[this.currSubmarineAppearance].apply();
         this.semiSphere.display();
     this.scene.popMatrix();
 
@@ -111,13 +108,13 @@ MySubmarine.prototype.display = function(){
         this.scene.translate(0, 0.57/2, 0.88/2);
         this.scene.scale(0.60/2, 0.57, 0.88/2);
         this.scene.rotate(-Math.PI/2, 1, 0, 0);
-        this.bodyTextures[this.scene.currSubmarineAppearance].apply();
+        this.bodyTextures[this.currSubmarineAppearance].apply();
         this.cylinder.display();
 
         //tampo cilindro cima
         this.scene.pushMatrix();
             this.scene.translate(0, 0, 1);
-            this.bodyTextures[this.scene.currSubmarineAppearance].apply();
+            this.bodyTextures[this.currSubmarineAppearance].apply();
             this.base.display();
         this.scene.popMatrix();
     this.scene.popMatrix();
@@ -128,27 +125,27 @@ MySubmarine.prototype.display = function(){
         this.scene.pushMatrix();
             this.scene.scale(0.05, 0.7, 0.05);
             this.scene.rotate(-Math.PI/2, 1, 0, 0);
-            this.bodyTextures[this.scene.currSubmarineAppearance].apply();
+            this.bodyTextures[this.currSubmarineAppearance].apply();
             this.cylinder.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
             this.scene.translate(0, 0.725, -0.05);
             this.scene.scale(0.05, 0.05, 0.25);
-            this.bodyTextures[this.scene.currSubmarineAppearance].apply();
+            this.bodyTextures[this.currSubmarineAppearance].apply();
             this.cylinder.display();
 
             //tampo cima
             this.scene.pushMatrix();
                 this.scene.translate(0, 0, 1);
-                this.bodyTextures[this.scene.currSubmarineAppearance].apply();
+                this.bodyTextures[this.currSubmarineAppearance].apply();
                 this.base.display();
             this.scene.popMatrix();
 
             //tampo baixo
             this.scene.pushMatrix();
                 this.scene.rotate(Math.PI, 0, 1, 0);
-                this.bodyTextures[this.scene.currSubmarineAppearance].apply();
+                this.bodyTextures[this.currSubmarineAppearance].apply();
                 this.base.display();
             this.scene.popMatrix();
         this.scene.popMatrix();
@@ -159,7 +156,7 @@ MySubmarine.prototype.display = function(){
         this.scene.translate(0.73/2+0.4/2, -0.25, -2.04);
         this.scene.scale(0.4/2, 0.4/2, 0.4);
         this.scene.translate(0, 0, 0.5);
-        this.bodyTextures[this.scene.currSubmarineAppearance].apply();
+        this.bodyTextures[this.currSubmarineAppearance].apply();
         this.propeller.display();
     this.scene.popMatrix();
 
@@ -168,7 +165,7 @@ MySubmarine.prototype.display = function(){
         this.scene.translate(-0.73/2-0.4/2, -0.25, -2.04);
         this.scene.scale(0.4/2, 0.4/2, 0.4);
         this.scene.translate(0, 0, 0.5);
-        this.bodyTextures[this.scene.currSubmarineAppearance].apply();
+        this.bodyTextures[this.currSubmarineAppearance].apply();
         this.propeller.display();
     this.scene.popMatrix();
 
@@ -176,7 +173,7 @@ MySubmarine.prototype.display = function(){
     this.scene.pushMatrix();
         this.scene.translate(0, 0, -2.04);
         this.scene.scale(2.34, 1, 1); //algo errado...
-        this.bodyTextures[this.scene.currSubmarineAppearance].apply();
+        this.bodyTextures[this.currSubmarineAppearance].apply();
         this.trapezium.display();
     this.scene.popMatrix();
 
@@ -185,7 +182,7 @@ MySubmarine.prototype.display = function(){
         this.scene.translate(0, 0, -2.04);
         this.scene.rotate(Math.PI/2, 0, 0, 1);
         this.scene.scale(2.34, 1, 1);
-        this.bodyTextures[this.scene.currSubmarineAppearance].apply();
+        this.bodyTextures[this.currSubmarineAppearance].apply();
         this.trapezium.display();
     this.scene.popMatrix();
 
@@ -194,7 +191,7 @@ MySubmarine.prototype.display = function(){
         this.scene.translate(0, 0.7, 0.5);
         this.scene.rotate(Math.PI, 1, 0, 0);
         this.scene.scale(1.42, 1, 1);
-        this.bodyTextures[this.scene.currSubmarineAppearance].apply();
+        this.bodyTextures[this.currSubmarineAppearance].apply();
         this.trapezium.display();
     this.scene.popMatrix();
 

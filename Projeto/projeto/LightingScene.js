@@ -37,18 +37,8 @@ LightingScene.prototype.init = function(application) {
 	this.light4 = true;
 	this.light5 = true;
 	this.speed = 3;
-    this.textures = 'Rock';
 
-
-    this.submarineAppearences = ['Metal', 'Rock', 'Coral', 'Fish'];
-
-    var submarineAppearences = [];
-
-    this.submarineAppearenceList = [];
-	this.submarineAppearenceList['Metal'] = 0;
-	this.submarineAppearenceList['Rock'] = 1;
-	this.submarineAppearenceList['Coral'] = 2;
-    this.submarineAppearenceList['Fish'] = 3;
+    this.textures = 'Fish';
 
 	this.paused = false;
 
