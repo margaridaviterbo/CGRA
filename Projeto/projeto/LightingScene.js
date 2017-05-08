@@ -36,7 +36,9 @@ LightingScene.prototype.init = function(application) {
 	this.light3 = true;
 	this.light4 = true;
 	this.light5 = true;
-	this.speed=3;
+	this.speed = 3;
+    this.textures = 'textures';
+    this.submarineAppearences = ['Metal', 'Rock', 'Coral', 'Fish'];
 
 	this.paused = false;
 
@@ -48,6 +50,21 @@ LightingScene.prototype.init = function(application) {
 	this.floor = new MyQuad(this, 0, 10, 0, 12);
 
 	// Materials
+
+    this.submarineAppearenceMetal = new CGFappearance(this);
+    this.submarineAppearenceMetal.setAmbient(0.3, 0.3, 0.3, 1);
+    this.submarineAppearenceMetal.setDiffuse(0.376, 0.376, 0.376, 1);
+    this.submarineAppearenceMetal.setSpecular(1, 1, 1, 1);
+    this.submarineAppearenceMetal.setShininess(300);
+
+    this.submarineAppearenceRock = new CGFappearance(this);
+    this.submarineAppearenceRock.setAmbient(0.3, 0.3, 0.3, 1);
+    this.submarineAppearenceRock.setDiffuse(0.6, 0.6, 0.6, 1);
+    this.submarineAppearenceRock.setSpecular(0.2, 0.2, 0.2, 1);
+    this.submarineAppearenceRock.setShininess(10);
+    this.submarineAppearenceRock.loadTexture('../resources/images/texture_rock_moss.jpg');
+	this.submarineAppearenceRock.setTextureWrap('REPEAT, REPEAT');
+
 	this.oceanAppearance = new CGFappearance(this);
 	this.oceanAppearance.setAmbient(0.3, 0.3, 0.3, 1);
 	this.oceanAppearance.setDiffuse(0.3, 0.3, 0.7, 1);
@@ -62,7 +79,7 @@ LightingScene.prototype.init = function(application) {
 	this.postAppearance.setSpecular(0.7, 0.7, 0.7, 1);
 	this.postAppearance.setShininess(200);
 
-	//board B 
+	//board B
 	this.boardAppearance = new CGFappearance(this);
 	this.boardAppearance.setAmbient(0.3,0.3,0.3,1);
 	this.boardAppearance.setDiffuse(0.4,0.4,0.4,1);
@@ -71,7 +88,7 @@ LightingScene.prototype.init = function(application) {
 	this.boardAppearance.loadTexture('../resources/images/board.png');
 
 	this.setUpdatePeriod(100);
-	
+
 };
 
 LightingScene.prototype.pauseContinue = function(){
@@ -201,6 +218,7 @@ LightingScene.prototype.display = function() {
 	this.pushMatrix();
         this.translate(this.submarine.positionX, 0, this.submarine.positionZ);
         this.rotate(this.submarine.rotationAngle, 0, 1, 0);
+        this.submarineAppearenceRock.apply();
         this.submarine.display();
     this.popMatrix();
 
