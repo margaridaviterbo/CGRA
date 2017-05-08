@@ -36,7 +36,7 @@ LightingScene.prototype.init = function(application) {
 	this.light3 = true;
 	this.light4 = true;
 	this.light5 = true;
-	this.speed = 3;
+	this.speed = 0;
 
     this.textures = 'Fish';
 
@@ -178,9 +178,14 @@ LightingScene.prototype.update = function(currTime){
     this.submarine.changeTexture();
 
 	this.clock.update(currTime, this.paused);
+	this.submarine.update(currTime);
+
 };
 
 LightingScene.prototype.display = function() {
+
+	this.submarine.move(1);
+
 	// ---- BEGIN Background, camera and axis setup
 
 	// Clear image and depth buffer everytime we update the scene
@@ -204,7 +209,7 @@ LightingScene.prototype.display = function() {
 
 	// ---- BEGIN Primitive drawing section
 	this.pushMatrix();
-        this.translate(this.submarine.positionX, 0, this.submarine.positionZ);
+        this.translate(this.submarine.positionX, 3, this.submarine.positionZ);
         this.rotate(this.submarine.rotationAngle, 0, 1, 0);
         this.submarine.display();
     this.popMatrix();

@@ -8,7 +8,8 @@
     this.cylinder = new MyCylinder(scene, 20, 1);
     this.semiSphere = new MySemiSphere(scene, 20, 20);
     this.base = new MyCylinderBase(scene, 20);
-    this.propeller = new MyPropeller(scene);
+    this.propeller1 = new MyPropeller(scene);
+    this.propeller2 = new MyPropeller(scene);
     this.trapezium = new MyTrapezium(scene);
 
 	this.currSubmarineAppearance;
@@ -50,11 +51,17 @@
 	this.bodyTextures[2] = this.submarineAppearenceCoral;
     this.bodyTextures[3] = this.submarineAppearenceFish;
 
-    this.rotationAngle = Math.PI*4/5;
+    //this.rotationAngle = Math.PI*4/5;
 
-    this.positionX = 5;
-    this.positionZ = 5;
- };
+    //this.positionX = 5;
+    //this.positionZ = 5;
+
+     this.rotationAngle = 0;
+
+    this.positionX = 0;
+    this.positionZ = 0;
+
+};
 
 MySubmarine.prototype = Object.create(CGFobject.prototype);
 MySubmarine.prototype.constructor = MySubmarine;
@@ -119,13 +126,14 @@ MySubmarine.prototype.display = function(){
         this.scene.popMatrix();
     this.scene.popMatrix();
 
+    //espiao xD
     this.scene.pushMatrix();
         this.scene.translate(0, 0.7, 0.55);
 
         this.scene.pushMatrix();
             this.scene.scale(0.05, 0.7, 0.05);
             this.scene.rotate(-Math.PI/2, 1, 0, 0);
-            this.bodyTextures[this.currSubmarineAppearance].apply();
+            this.submarineAppearenceMetal.apply();
             this.cylinder.display();
         this.scene.popMatrix();
 
@@ -138,14 +146,14 @@ MySubmarine.prototype.display = function(){
             //tampo cima
             this.scene.pushMatrix();
                 this.scene.translate(0, 0, 1);
-                this.bodyTextures[this.currSubmarineAppearance].apply();
+                this.submarineAppearenceMetal.apply();
                 this.base.display();
             this.scene.popMatrix();
 
             //tampo baixo
             this.scene.pushMatrix();
                 this.scene.rotate(Math.PI, 0, 1, 0);
-                this.bodyTextures[this.currSubmarineAppearance].apply();
+                this.submarineAppearenceMetal.apply();
                 this.base.display();
             this.scene.popMatrix();
         this.scene.popMatrix();
@@ -156,8 +164,8 @@ MySubmarine.prototype.display = function(){
         this.scene.translate(0.73/2+0.4/2, -0.25, -2.04);
         this.scene.scale(0.4/2, 0.4/2, 0.4);
         this.scene.translate(0, 0, 0.5);
-        this.bodyTextures[this.currSubmarineAppearance].apply();
-        this.propeller.display();
+        this.submarineAppearenceMetal.apply();
+        this.propeller1.display();
     this.scene.popMatrix();
 
     //helice esquerda
@@ -165,8 +173,8 @@ MySubmarine.prototype.display = function(){
         this.scene.translate(-0.73/2-0.4/2, -0.25, -2.04);
         this.scene.scale(0.4/2, 0.4/2, 0.4);
         this.scene.translate(0, 0, 0.5);
-        this.bodyTextures[this.currSubmarineAppearance].apply();
-        this.propeller.display();
+        this.submarineAppearenceMetal.apply();
+        this.propeller2.display();
     this.scene.popMatrix();
 
     //trapezio tras horizontal
@@ -206,7 +214,6 @@ MySubmarine.prototype.move = function(direction){
     //forward
     var x = Math.sin(this.rotationAngle);
     var z = Math.cos(this.rotationAngle);
-    console.log(x + "  " + z);
 
     if (direction == 1){
         this.positionX += x*0.05*this.scene.speed;
@@ -217,3 +224,34 @@ MySubmarine.prototype.move = function(direction){
         this.positionZ -= z*0.05*this.scene.speed;
     }
 }
+
+MySubmarine.prototype.increaseVelocity = function(){
+
+    if (this.scene.speed >= 5){
+        this.scene.speed = 5;
+    }
+    else{
+        this.scene.speed += 0.1;
+    }
+}
+
+MySubmarine.prototype.decreaseVelocity = function(){
+    if (this.scene.speed <= -5){
+        this.scene.speed = -5;
+    }
+    else{
+        this.scene.speed -= 0.1;
+    }
+}
+
+MySubmarine.prototype.update = function(currTime){
+
+    var dif = currTime - this.timePassed;
+
+    var angle = dif * 2 * Math.PI * 60/ 1000;
+
+    this.propeller1.setAngle(angle, 1);
+    this.propeller2.setAngle(angle, -1);
+
+    this.timePassed = currTime;
+};

@@ -85,12 +85,14 @@ MyInterface.prototype.processKeyboard = function(event) {
 		//w ou W
 		case (87):
 		case (119):
-			this.scene.submarine.move(1);
+			//this.scene.submarine.move(1);
+			this.scene.submarine.increaseVelocity();
 			break;
 		//s ou S
 		case (83):
 		case (115):
-			this.scene.submarine.move(-1);
+			//this.scene.submarine.move(-1);
+			this.scene.submarine.decreaseVelocity();
 			break;
 	};
 };
