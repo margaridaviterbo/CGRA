@@ -129,7 +129,7 @@ MySubmarine.prototype.display = function(){
 }
 
 MySubmarine.prototype.rotate = function(orientation){
-   
+
     this.rotationAngle += Math.PI / 180 * orientation * this.scene.speed;
 }
 
