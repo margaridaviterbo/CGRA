@@ -37,7 +37,7 @@ LightingScene.prototype.init = function(application) {
 	this.light4 = true;
 	this.light5 = true;
 	this.speed = 3;
-    this.textures = 'textures';
+    this.textures = 'Rock';
     this.submarineAppearences = ['Metal', 'Rock', 'Coral', 'Fish'];
 
 	this.paused = false;
@@ -64,6 +64,22 @@ LightingScene.prototype.init = function(application) {
     this.submarineAppearenceRock.setShininess(10);
     this.submarineAppearenceRock.loadTexture('../resources/images/texture_rock_moss.jpg');
 	this.submarineAppearenceRock.setTextureWrap('REPEAT, REPEAT');
+
+    this.submarineAppearenceCoral = new CGFappearance(this);
+    this.submarineAppearenceCoral.setAmbient(0.3, 0.3, 0.3, 1);
+    this.submarineAppearenceCoral.setDiffuse(0.7, 0.4, 0.4, 1);
+    this.submarineAppearenceCoral.setSpecular(0.7, 0.7, 0.7, 1);
+    this.submarineAppearenceCoral.setShininess(150);
+    this.submarineAppearenceCoral.loadTexture('../resources/images/coral.jpg');
+	this.submarineAppearenceCoral.setTextureWrap('REPEAT, REPEAT');
+
+    this.submarineAppearenceFish = new CGFappearance(this);
+    this.submarineAppearenceFish.setAmbient(0.3, 0.3, 0.3, 1);
+    this.submarineAppearenceFish.setDiffuse(0.7, 0.7, 0.7, 1);
+    this.submarineAppearenceFish.setSpecular(0.9, 0.9, 0.9, 1);
+    this.submarineAppearenceFish.setShininess(200);
+    this.submarineAppearenceFish.loadTexture('../resources/images/fish.jpg');
+	this.submarineAppearenceFish.setTextureWrap('REPEAT, REPEAT');
 
 	this.oceanAppearance = new CGFappearance(this);
 	this.oceanAppearance.setAmbient(0.3, 0.3, 0.3, 1);
