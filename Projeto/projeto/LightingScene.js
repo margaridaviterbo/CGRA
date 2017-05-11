@@ -36,7 +36,9 @@ LightingScene.prototype.init = function(application) {
 	this.light3 = true;
 	this.light4 = true;
 	this.light5 = true;
-	this.speed=3;
+	this.speed = 0;
+
+    this.textures = 'Fish';
 
 	this.paused = false;
 
@@ -48,6 +50,7 @@ LightingScene.prototype.init = function(application) {
 	this.floor = new MyQuad(this, 0, 10, 0, 12);
 
 	// Materials
+
 	this.oceanAppearance = new CGFappearance(this);
 	this.oceanAppearance.setAmbient(0.3, 0.3, 0.3, 1);
 	this.oceanAppearance.setDiffuse(0.3, 0.3, 0.7, 1);
@@ -62,7 +65,7 @@ LightingScene.prototype.init = function(application) {
 	this.postAppearance.setSpecular(0.7, 0.7, 0.7, 1);
 	this.postAppearance.setShininess(200);
 
-	//board B 
+	//board B
 	this.boardAppearance = new CGFappearance(this);
 	this.boardAppearance.setAmbient(0.3,0.3,0.3,1);
 	this.boardAppearance.setDiffuse(0.4,0.4,0.4,1);
@@ -71,7 +74,7 @@ LightingScene.prototype.init = function(application) {
 	this.boardAppearance.loadTexture('../resources/images/board.png');
 
 	this.setUpdatePeriod(100);
-	
+
 };
 
 LightingScene.prototype.pauseContinue = function(){
@@ -172,10 +175,17 @@ LightingScene.prototype.updateLights = function() {
 
 LightingScene.prototype.update = function(currTime){
 
+    this.submarine.changeTexture();
+
 	this.clock.update(currTime, this.paused);
+	this.submarine.update(currTime);
+
 };
 
 LightingScene.prototype.display = function() {
+
+	this.submarine.move(1);
+
 	// ---- BEGIN Background, camera and axis setup
 
 	// Clear image and depth buffer everytime we update the scene
@@ -199,8 +209,8 @@ LightingScene.prototype.display = function() {
 
 	// ---- BEGIN Primitive drawing section
 	this.pushMatrix();
-        /*this.translate(this.submarine.positionX, 0, this.submarine.positionZ);
-        this.rotate(this.submarine.rotationAngle, 0, 1, 0);*/
+        this.translate(this.submarine.positionX, 3, this.submarine.positionZ);
+        this.rotate(this.submarine.rotationAngle, 0, 1, 0);
         this.submarine.display();
     this.popMatrix();
 
