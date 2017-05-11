@@ -49,6 +49,12 @@ LightingScene.prototype.init = function(application) {
 	this.cylinder = new MyCylinder(this, 20, 1);
 	this.floor = new MyQuad(this, 0, 10, 0, 12);
 
+	this.target1 = new MyTarget(this, 3, 4);
+	this.target2 = new MyTarget(this, 7, 5);
+	this.targets = [this.target1, this.target2];
+
+	this.torpedos = [new MyTorpedo(this, this.submarine.positionX, this.submarine.positionY-1, this.submarine.positionZ, this.submarine.rotationAngle)];
+
 	// Materials
 
 	this.oceanAppearance = new CGFappearance(this);
@@ -182,9 +188,14 @@ LightingScene.prototype.update = function(currTime){
 
 };
 
+LightingScene.prototype.removeTarget = function(){
+	//remove first element
+	this.targets.pop();
+}
+
 LightingScene.prototype.display = function() {
 
-	this.submarine.move(1);
+	this.submarine.move();
 
 	// ---- BEGIN Background, camera and axis setup
 
@@ -208,10 +219,23 @@ LightingScene.prototype.display = function() {
 	// ---- END Background, camera and axis setup
 
 	// ---- BEGIN Primitive drawing section
+
+	for(var i=0; i<this.targets.length; i++){
+		this.pushMatrix();
+				this.targets[i].display();
+		this.popMatrix();
+	}
+
 	this.pushMatrix();
-        this.translate(this.submarine.positionX, 3, this.submarine.positionZ);
+        this.translate(this.submarine.positionX, this.submarine.positionY, this.submarine.positionZ);
         this.rotate(this.submarine.rotationAngle, 0, 1, 0);
         this.submarine.display();
+    this.popMatrix();
+
+	this.pushMatrix();
+        this.translate(this.torpedos[0].positionX, this.torpedos[0].positionY, this.torpedos[0].positionZ);
+        this.rotate(this.torpedos[0].rotationAngle, 0, 1, 0);
+        this.torpedos[0].display();
     this.popMatrix();
 
 	this.pushMatrix();

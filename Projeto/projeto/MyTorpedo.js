@@ -2,19 +2,18 @@
  * MyTorpedo
  * @constructor
  */
- function MyTorpedo(scene) {
+ function MyTorpedo(scene, positionX, positionY, positionZ, angle) {
     CGFobject.call(this,scene);
 
     this.cylinder = new MyCylinder(scene, 20, 1);
     this.semiSphere = new MySemiSphere(scene, 20, 20);
-    this.base = new MyCylinderBase(scene, 20);
-    this.propeller1 = new MyPropeller(scene);
-    this.propeller2 = new MyPropeller(scene);
     this.trapezium = new MyTrapezium(scene);
 
-    this.positionX = 0;
-    this.positionY = 0;
-    this.positionZ = 0;
+    this.positionX = positionX;
+    this.positionY = positionY;
+    this.positionZ = positionZ;
+
+    this.rotationAngle = angle;
 
     this.orientation;
 
@@ -70,4 +69,10 @@ MyTorpedo.prototype.display = function(){
         this.trapezium.display();
     this.scene.popMatrix();
 
+}
+
+MyTorpedo.prototype.updateHorizontalPosition = function(posX, posZ){
+
+    this.positionX = posX;
+    this.positionZ = posZ;
 }
