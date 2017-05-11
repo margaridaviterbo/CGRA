@@ -185,6 +185,7 @@ LightingScene.prototype.update = function(currTime){
 
 	this.clock.update(currTime, this.paused);
 	this.submarine.update(currTime);
+	this.torpedos[0].update(currTime);
 
 };
 

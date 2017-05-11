@@ -19,6 +19,8 @@
 
     this.visible = true;
 
+    this.animation = false;
+
     this.metalAppearance = new CGFappearance(scene);
     this.metalAppearance.setAmbient(0.3, 0.3, 0.3, 1);
     this.metalAppearance.setDiffuse(0.376, 0.376, 0.376, 1);
@@ -77,7 +79,7 @@ MyTorpedo.prototype.updateHorizontalPosition = function(posX, posZ){
     this.positionZ = posZ;
 }
 
-MyTorpedo.prototype.animate = function(){
+MyTorpedo.prototype.calculateRotationAngle = function(){
 
     var targetPos = [this.scene.targets[0].positionX,
                      this.scene.targets[0].positionY,+
@@ -87,30 +89,51 @@ MyTorpedo.prototype.animate = function(){
     var vector = [targetPos[0] - this.positionX,
                   targetPos[2] - this.positionZ];
 
-    var vector = [targetPos[0] - this.positionX,
-                  targetPos[2] - this.positionZ];
-
     //cos(ang) = vector1 * vector2 / (normal(vector1) * normal(vector2));
 
     var n1 = Math.sqrt(vector[0]*vector[0] + vector[1] * vector[1]);
     var cos = vector[1] / n1;
     var angle = Math.acos(cos);
 
-    console.log(angle);
-    console.log(vector[0], vector[1]);
-
-    /*
-    x>0 e z>0, x>0 e z<0, 
-    */
     if (vector[0] > 0)
-        this.rotationAngle = angle;
-
-    /*
-    x<0 z>0, x<0 e z<0
-    */
+        return angle;
     else 
-        this.rotationAngle = 2*Math.PI - angle;
+        return 2*Math.PI - angle;
 
+}
+
+MyTorpedo.prototype.animate = function(){
+   
+    //this.rotationAngle = this.calculateRotationAngle();
+    this.animation = true;
     var distance;
 
 }
+
+MyTorpedo.prototype.animate = function(){
+   
+    this.animation = true;
+    var distance;
+
+}
+
+MyTorpedo.prototype.update = function(currTime){
+
+    var dif = currTime - this.timePassed;
+
+    if (this.animation){
+
+        var finalAngle = this.calculateRotationAngle();
+        
+        if (this.rotationAngle >= finalAngle){
+            this.animation = false;
+            return;
+        }
+
+        var angle = dif * finalAngle / 30;
+        this.rotationAngle += angle * Math.PI / 180;
+    }
+
+    this.timePassed = currTime;
+};
+
