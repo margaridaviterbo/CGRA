@@ -37,14 +37,14 @@ MyTorpedo.prototype.display = function(){
     //cilindro principal
     this.scene.pushMatrix();
         this.scene.translate(0, 0, -0.5);
-        this.scene.scale(1/4, 1/4, 1);
+        this.scene.scale(1/5, 1/5, 1);
         this.cylinder.display();
     this.scene.popMatrix();
 
     //semiEsfera frontal
     this.scene.pushMatrix();
         this.scene.translate(0, 0, 0.5);
-        this.scene.scale(1/4, 1/4, 1/4);
+        this.scene.scale(1/5, 1/5, 1/4);
         this.semiSphere.display();
     this.scene.popMatrix();
 
@@ -52,7 +52,7 @@ MyTorpedo.prototype.display = function(){
     this.scene.pushMatrix();
         this.scene.translate(0, 0, -0.5);
         this.scene.rotate(Math.PI, 0, 1, 0);
-        this.scene.scale(1/4, 1/4, 1/4);
+        this.scene.scale(1/5, 1/5, 1/4);
         this.semiSphere.display();
     this.scene.popMatrix();
 
@@ -75,4 +75,42 @@ MyTorpedo.prototype.updateHorizontalPosition = function(posX, posZ){
 
     this.positionX = posX;
     this.positionZ = posZ;
+}
+
+MyTorpedo.prototype.animate = function(){
+
+    var targetPos = [this.scene.targets[0].positionX,
+                     this.scene.targets[0].positionY,+
+                     this.scene.targets[0].positionZ];
+
+    //calculate angle between vector and origin ("z")
+    var vector = [targetPos[0] - this.positionX,
+                  targetPos[2] - this.positionZ];
+
+    var vector = [targetPos[0] - this.positionX,
+                  targetPos[2] - this.positionZ];
+
+    //cos(ang) = vector1 * vector2 / (normal(vector1) * normal(vector2));
+
+    var n1 = Math.sqrt(vector[0]*vector[0] + vector[1] * vector[1]);
+    var cos = vector[1] / n1;
+    var angle = Math.acos(cos);
+
+    console.log(angle);
+    console.log(vector[0], vector[1]);
+
+    /*
+    x>0 e z>0, x>0 e z<0, 
+    */
+    if (vector[0] > 0)
+        this.rotationAngle = angle;
+
+    /*
+    x<0 z>0, x<0 e z<0
+    */
+    else 
+        this.rotationAngle = 2*Math.PI - angle;
+
+    var distance;
+
 }

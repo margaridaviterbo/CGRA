@@ -9,6 +9,7 @@
     this.base = new MyCylinderBase(scene, 20);
 
     this.positionX = positionX;
+    this.positionY = 0;
     this.positionZ = positionZ;
 
     this.blackAppearance = new CGFappearance(scene);
@@ -29,7 +30,7 @@ MyTarget.prototype = Object.create(CGFobject.prototype);
 MyTarget.prototype.constructor = MyTarget;
 
 MyTarget.prototype.display = function(){
-    this.scene.translate(this.positionX, 0, this.positionZ);
+    this.scene.translate(this.positionX, this.positionY, this.positionZ);
     this.scene.rotate(-Math.PI/2, 1, 0, 0);
     this.scene.scale(0.5, 0.5, 0.2);
 
@@ -51,5 +52,4 @@ MyTarget.prototype.display = function(){
         this.targetAppearance.apply();
         this.base.display();
     this.scene.popMatrix();
-
 }

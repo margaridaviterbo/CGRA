@@ -50,7 +50,7 @@ LightingScene.prototype.init = function(application) {
 	this.floor = new MyQuad(this, 0, 10, 0, 12);
 
 	this.target1 = new MyTarget(this, 3, 4);
-	this.target2 = new MyTarget(this, 7, 5);
+	this.target2 = new MyTarget(this, 7, 0);
 	this.targets = [this.target1, this.target2];
 
 	this.torpedos = [new MyTorpedo(this, this.submarine.positionX, this.submarine.positionY-1, this.submarine.positionZ, this.submarine.rotationAngle)];
