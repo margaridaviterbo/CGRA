@@ -54,9 +54,10 @@
     //this.rotationAngle = Math.PI*4/5;
 
     //this.positionX = 5;
+    this.positionY = 3;
     //this.positionZ = 5;
 
-     this.rotationAngle = 0;
+    this.rotationAngle = 0;
 
     this.positionX = 0;
     this.positionZ = 0;
@@ -202,12 +203,13 @@ MySubmarine.prototype.display = function(){
         this.bodyTextures[this.currSubmarineAppearance].apply();
         this.trapezium.display();
     this.scene.popMatrix();
-
 }
 
 MySubmarine.prototype.rotate = function(orientation){
 
     this.rotationAngle += Math.PI / 180 * orientation * this.scene.speed;
+
+    this.scene.torpedos[0].rotationAngle = this.rotationAngle;
 }
 
 MySubmarine.prototype.move = function(direction){
@@ -215,14 +217,11 @@ MySubmarine.prototype.move = function(direction){
     var x = Math.sin(this.rotationAngle);
     var z = Math.cos(this.rotationAngle);
 
-    if (direction == 1){
-        this.positionX += x*0.05*this.scene.speed;
-        this.positionZ += z*0.05*this.scene.speed;
-    }
-    else if (direction == -1){
-        this.positionX -= x*0.05*this.scene.speed;
-        this.positionZ -= z*0.05*this.scene.speed;
-    }
+    this.positionX += x*0.05*this.scene.speed;
+    this.positionZ += z*0.05*this.scene.speed;
+
+    //updates torpedo position
+    this.scene.torpedos[0].updateHorizontalPosition(this.positionX, this.positionZ);
 }
 
 MySubmarine.prototype.increaseVelocity = function(){
@@ -248,10 +247,20 @@ MySubmarine.prototype.update = function(currTime){
 
     var dif = currTime - this.timePassed;
 
-    var angle = dif * 2 * Math.PI * 60/ 1000;
+    //this.setAccelaration();
+
+    //this.propeller1.updateVelocity(dif);
+
+    //console.log(this.propeller1.angularVelocity);
+
+    //this.propeller1.test(angle);
+
+    //TODO: dúvidas no ponto 2
+
+    /*var angle = dif * 2 * Math.PI * 60/ 1000;
 
     this.propeller1.setAngle(angle, 1);
-    this.propeller2.setAngle(angle, -1);
+    this.propeller2.setAngle(angle, -1);*/
 
     this.timePassed = currTime;
 };
