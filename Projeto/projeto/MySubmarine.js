@@ -11,6 +11,7 @@
     this.propeller1 = new MyPropeller(scene);
     this.propeller2 = new MyPropeller(scene);
     this.trapezium = new MyTrapezium(scene);
+    this.torpedo = new MyTorpedo(scene);
 
 	this.currSubmarineAppearance;
 
@@ -203,6 +204,12 @@ MySubmarine.prototype.display = function(){
         this.trapezium.display();
     this.scene.popMatrix();
 
+    //torpedo
+    this.scene.pushMatrix();
+        this.scene.translate(0, -1, 0);
+        this.torpedo.display();
+    this.scene.popMatrix();
+
 }
 
 MySubmarine.prototype.rotate = function(orientation){
@@ -248,10 +255,20 @@ MySubmarine.prototype.update = function(currTime){
 
     var dif = currTime - this.timePassed;
 
-    var angle = dif * 2 * Math.PI * 60/ 1000;
+    //this.setAccelaration();
+
+    //this.propeller1.updateVelocity(dif);
+
+    //console.log(this.propeller1.angularVelocity);
+
+    //this.propeller1.test(angle);
+
+    //TODO: dúvidas no ponto 2
+
+    /*var angle = dif * 2 * Math.PI * 60/ 1000;
 
     this.propeller1.setAngle(angle, 1);
-    this.propeller2.setAngle(angle, -1);
+    this.propeller2.setAngle(angle, -1);*/
 
     this.timePassed = currTime;
 };

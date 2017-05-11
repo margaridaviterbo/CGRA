@@ -15,7 +15,6 @@ MyTriangle.prototype.constructor=MyTriangle;
 
 MyTriangle.prototype.initBuffers = function () {
 
-    this.texCoords = [];
     this.vertices = [];
 
     for(var i = 0; i < 3; i++){
@@ -28,9 +27,31 @@ MyTriangle.prototype.initBuffers = function () {
     }
 
     this.normals = [
+/*
+        0, 1, 0,
+        0, 1, 0,
+        0, 1, 0,
+        0, -1, 0,
+        0, -1, 0,
+        0, -1, 0,
+
+        -1, 0, 0, 
+        0, 0, -1,
+        -1, 0, 0,
+        -1, 0, 0, 
+        0, 0, -1,
+        -1, 0, 0,
+
+        0, 0, -1, 
+        1, 0, 0.66,
+        1, 0, 0.66,
+         0, 0, -1, 
+        1, 0, 0.66,
+        1, 0, 0.66*/
+    
         0, 1, 0,    //0
         0, 1, 0,    //1
-        0, 1, 0,    //2
+        0, 1, 0,    //3
         0, -1, 0,   //3
         0, -1, 0,   //4
         0, -1, 0,   //5
@@ -46,8 +67,8 @@ MyTriangle.prototype.initBuffers = function () {
         0, 0, -1,   //3
         0, 0, -1,   //4
         1, 0, 0.66  //5
-
     ];
+
 
     this.texCoords = [
         0, 1, 0,    //0
@@ -78,7 +99,22 @@ MyTriangle.prototype.initBuffers = function () {
 		0, 3, 2,
 		3, 5, 2,
 		1, 2, 4,
-		4, 2, 5
+		4, 2, 5,
+/*
+        6, 8, 7,
+		9, 10, 11,
+		6, 9, 8,
+		9, 11, 8,
+		7, 8, 10,
+		10, 8, 11,
+
+        12, 14, 13,
+		15, 16, 17,
+		12, 15, 14,
+		15, 17, 14,
+		13, 14, 16,
+		16, 14, 17*/
+
     ];
 
 
