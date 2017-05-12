@@ -14,8 +14,9 @@
     this.positionZ = positionZ;
 
     this.rotationAngle = angle;
+    this.orientation = 0;
 
-    this.orientation;
+    this.enableUpdate = true;
 
     this.visible = true;
 
@@ -26,8 +27,9 @@
     this.P2;
     this.P3;
     this.P4;
+    this.t=0;
 
-    this.timePassed = 0;
+    this.timePassed;
 
     this.metalAppearance = new CGFappearance(scene);
     this.metalAppearance.setAmbient(0.3, 0.3, 0.3, 1);
@@ -83,8 +85,10 @@ MyTorpedo.prototype.display = function(){
 
 MyTorpedo.prototype.updateHorizontalPosition = function(posX, posZ){
 
-    this.positionX = posX;
-    this.positionZ = posZ;
+    if (this.enableUpdate){
+        this.positionX = posX;
+        this.positionZ = posZ;
+    }
 }
 
 MyTorpedo.prototype.calculateVector = function(){
@@ -127,7 +131,11 @@ MyTorpedo.prototype.calculateDistance = function(){
 
 MyTorpedo.prototype.animate = function(){
 
+    //to not update with submarine
+    this.enableUpdate = false;
+
     this.rotateAnimation = true;
+    this.timePassed = 0;
 
     var vector = this.calculateVector();
     var distance = this.calculateDistance();
@@ -136,7 +144,7 @@ MyTorpedo.prototype.animate = function(){
     //calculate bezier points P2 and P3
     this.P2 = [
         4/5 * vector[0]+this.positionX,
-        4/5 * vector[1]+this.positionY,
+        this.positionY,
         4/5 * vector[2]+this.positionZ
     ];
 
@@ -159,34 +167,34 @@ MyTorpedo.prototype.update = function(currTime){
         if (this.rotationAngle >= finalAngle){
             this.rotateAnimation = false;
             this.bezierAnimation = true;
+            this.timePassed = 0;
         }
         else{
-            var angle = dif * finalAngle / 30;
-            this.rotationAngle += angle * Math.PI / 180;
+            this.rotationAngle += finalAngle/11;
         }
     }
 
-    /*
     if(this.bezierAnimation){
-        
-        for (var t=0; t <= 1; t+=1/this.animationTime){
+
+        if(this.t <= 1){
+
+            this.orientation += Math.PI / (this.animationTime*10*2);
+
+            var t = this.t;
 
             this.positionX = Math.pow((1-t), 3) * this.positionX + 3*Math.pow((1-t), 2) * t * this.P2[0] + 3*(1-t) * Math.pow(t, 2) * this.P3[0] + Math.pow(t, 3) * this.P4[0]; 
-            
-            console.log(this.positionX);
 
             this.positionY = Math.pow((1-t), 3) * this.positionY + 3*Math.pow((1-t), 2) * t * this.P2[1] + 3*(1-t) * Math.pow(t, 2) * this.P3[1] + Math.pow(t, 3) * this.P4[1]; 
 
-            console.log(this.positionY);
-
             this.positionZ = Math.pow((1-t), 3) * this.positionZ + 3*Math.pow((1-t), 2) * t * this.P2[2] + 3*(1-t) * Math.pow(t, 2) * this.P3[2] + Math.pow(t, 3) * this.P4[2]; 
 
-            console.log(this.positionZ);
+            this.t += 1/(this.animationTime * 10);
         }
-
-        this.bezierAnimation = false;
-    }*/
-
+        else{
+            this.bezierAnimation = false;
+            this.scene.destroy = true;
+        }
+    }
     this.timePassed = currTime;
 };
 
