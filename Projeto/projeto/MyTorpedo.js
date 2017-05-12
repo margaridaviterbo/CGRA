@@ -131,6 +131,9 @@ MyTorpedo.prototype.calculateDistance = function(){
 
 MyTorpedo.prototype.animate = function(){
 
+    if (this.scene.targets.length == 0)
+        return;
+
     //to not update with submarine
     this.enableUpdate = false;
 
