@@ -36,9 +36,9 @@ LightingScene.prototype.init = function(application) {
 	this.light3 = true;
 	this.light4 = true;
 	this.light5 = true;
-	this.speed = 3;
-    this.textures = 'Rock';
-    this.submarineAppearences = ['Metal', 'Rock', 'Coral', 'Fish'];
+	this.speed = 0;
+
+    this.textures = 'Fish';
 
 	this.paused = false;
 
@@ -49,37 +49,15 @@ LightingScene.prototype.init = function(application) {
 	this.cylinder = new MyCylinder(this, 20, 1);
 	this.floor = new MyQuad(this, 0, 10, 0, 12);
 
+	this.target1 = new MyTarget(this, 3, 4);
+	this.target2 = new MyTarget(this, 7, 6);
+	this.targets = [this.target1, this.target2];
+
+	this.torpedos = [new MyTorpedo(this, this.submarine.positionX, this.submarine.positionY-1, this.submarine.positionZ, this.submarine.rotationAngle)];
+
+	this.destroy = false;
+
 	// Materials
-
-    this.submarineAppearenceMetal = new CGFappearance(this);
-    this.submarineAppearenceMetal.setAmbient(0.3, 0.3, 0.3, 1);
-    this.submarineAppearenceMetal.setDiffuse(0.376, 0.376, 0.376, 1);
-    this.submarineAppearenceMetal.setSpecular(1, 1, 1, 1);
-    this.submarineAppearenceMetal.setShininess(300);
-
-    this.submarineAppearenceRock = new CGFappearance(this);
-    this.submarineAppearenceRock.setAmbient(0.3, 0.3, 0.3, 1);
-    this.submarineAppearenceRock.setDiffuse(0.6, 0.6, 0.6, 1);
-    this.submarineAppearenceRock.setSpecular(0.2, 0.2, 0.2, 1);
-    this.submarineAppearenceRock.setShininess(10);
-    this.submarineAppearenceRock.loadTexture('../resources/images/texture_rock_moss.jpg');
-	this.submarineAppearenceRock.setTextureWrap('REPEAT, REPEAT');
-
-    this.submarineAppearenceCoral = new CGFappearance(this);
-    this.submarineAppearenceCoral.setAmbient(0.3, 0.3, 0.3, 1);
-    this.submarineAppearenceCoral.setDiffuse(0.7, 0.4, 0.4, 1);
-    this.submarineAppearenceCoral.setSpecular(0.7, 0.7, 0.7, 1);
-    this.submarineAppearenceCoral.setShininess(150);
-    this.submarineAppearenceCoral.loadTexture('../resources/images/coral.jpg');
-	this.submarineAppearenceCoral.setTextureWrap('REPEAT, REPEAT');
-
-    this.submarineAppearenceFish = new CGFappearance(this);
-    this.submarineAppearenceFish.setAmbient(0.3, 0.3, 0.3, 1);
-    this.submarineAppearenceFish.setDiffuse(0.7, 0.7, 0.7, 1);
-    this.submarineAppearenceFish.setSpecular(0.9, 0.9, 0.9, 1);
-    this.submarineAppearenceFish.setShininess(200);
-    this.submarineAppearenceFish.loadTexture('../resources/images/fish.jpg');
-	this.submarineAppearenceFish.setTextureWrap('REPEAT, REPEAT');
 
 	this.oceanAppearance = new CGFappearance(this);
 	this.oceanAppearance.setAmbient(0.3, 0.3, 0.3, 1);
@@ -204,11 +182,33 @@ LightingScene.prototype.updateLights = function() {
 };
 
 LightingScene.prototype.update = function(currTime){
+	
+	this.removeTarget();
+
+    this.submarine.changeTexture();
 
 	this.clock.update(currTime, this.paused);
+	this.submarine.update(currTime);
+	this.torpedos[0].update(currTime);
+
 };
 
+LightingScene.prototype.removeTarget = function(){
+	//remove first element
+
+	if (this.destroy){
+		this.targets.shift();
+		this.torpedos.pop();
+		this.torpedos.push(new MyTorpedo(this, this.submarine.positionX, this.submarine.positionY-1, this.submarine.positionZ, this.submarine.rotationAngle));
+		
+		this.destroy = false;
+	}
+}
+
 LightingScene.prototype.display = function() {
+
+	this.submarine.move();
+
 	// ---- BEGIN Background, camera and axis setup
 
 	// Clear image and depth buffer everytime we update the scene
@@ -231,11 +231,30 @@ LightingScene.prototype.display = function() {
 	// ---- END Background, camera and axis setup
 
 	// ---- BEGIN Primitive drawing section
+
+	for(var i=0; i<this.targets.length; i++){
+		this.pushMatrix();
+				this.targets[i].display();
+		this.popMatrix();
+	}
+
 	this.pushMatrix();
-        this.translate(this.submarine.positionX, 0, this.submarine.positionZ);
+        this.translate(this.submarine.positionX, this.submarine.positionY, this.submarine.positionZ);
         this.rotate(this.submarine.rotationAngle, 0, 1, 0);
-        this.submarineAppearenceRock.apply();
         this.submarine.display();
+    this.popMatrix();
+
+	this.pushMatrix();
+    
+		this.translate(this.torpedos[0].positionX, this.torpedos[0].positionY, this.torpedos[0].positionZ);
+		this.rotate(this.torpedos[0].rotationAngle, 0, 1, 0);
+		this.rotate(this.torpedos[0].orientation, 1, 0, 0);
+		this.rotate(-this.torpedos[0].rotationAngle, 0, 1, 0);
+		this.translate(0, 0, 0);
+
+
+        this.rotate(this.torpedos[0].rotationAngle, 0, 1, 0);
+        this.torpedos[0].display();
     this.popMatrix();
 
 	this.pushMatrix();

@@ -11,12 +11,18 @@
     this.prism = new MyPrism(scene, 4, 1);
 
     this.rotationAngle = -Math.PI/4;
+
+    this.angularVelocity;
+    this.minVelocity = 2*Math.PI;
+    this.acceleration = 0;
+    
  };
 
 MyPropeller.prototype = Object.create(CGFobject.prototype);
 MyPropeller.prototype.constructor = MyPropeller;
 
 MyPropeller.prototype.display = function(){
+
     //cylinder
     this.scene.pushMatrix();
         this.scene.scale(1, 1, 0.5);
@@ -56,8 +62,34 @@ MyPropeller.prototype.display = function(){
     
     this.scene.popMatrix();
 }
+/*
+MyPropeller.prototype.setAngle = function(angle, orientation){
 
-MyPropeller.prototype.rotate = function(orientation){
-   
-    this.rotationAngle += Math.PI / 180 * orientation * this.scene.speed;
+    if (isNaN(angle))
+        return;
+
+    //TODO: corrigir velocidades
+    if (orientation == 1){
+
+        if (this.scene.speed < 0){
+            this.rotationAngle -= angle * Math.PI / 180 - angle * Math.PI / 180 * this.scene.speed;
+        }
+        else{
+            this.rotationAngle += angle * Math.PI / 180 + angle * Math.PI / 180*this.scene.speed; //TODO: Perguntar prof
+        }
+    }
+
+    else{
+
+        if (this.scene.speed < 0){
+            this.rotationAngle += angle * Math.PI / 180 - angle * Math.PI / 180 * this.scene.speed;
+        }
+        else{
+            this.rotationAngle -= angle * Math.PI / 180 + angle * Math.PI / 180 * this.scene.speed;
+        }
+    }
+}*/
+
+MyPropeller.prototype.updateVelocity = function(currTime){
+    this.angularVelocity = this.minVelocity + this.acceleration*currTime;
 }
