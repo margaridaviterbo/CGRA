@@ -154,19 +154,17 @@ MySubmarine.prototype.display = function(){
         this.scene.popMatrix();
     this.scene.popMatrix();
 
-    //periscope
-        this.scene.pushMatrix();
-            this.scene.translate(0, 0.7, 0.55);
-            this.scene.scale(0.05, 0.7, 0.05);
-            this.scene.rotate(-Math.PI/2, 1, 0, 0);
-            if(this.currSubmarineAppearance == 3){
-                this.submarineAppearenceBlue.apply();
-            }
-            else{
-                this.bodyTextures[this.currSubmarineAppearance].apply();
-            }
-            this.periscope.display();
-        this.scene.popMatrix();
+    //periscopio
+    this.scene.pushMatrix();
+        this.scene.translate(0, 0.155 + this.periscope.positionY, 0);
+        if(this.currSubmarineAppearance == 3){
+            this.submarineAppearenceBlue.apply();
+        }
+        else{
+            this.bodyTextures[this.currSubmarineAppearance].apply();
+        }
+        this.periscope.display();
+    this.scene.popMatrix();
 
     //helice direita
     this.scene.pushMatrix();
@@ -280,6 +278,8 @@ MySubmarine.prototype.update = function(currTime){
 
     var dif = currTime - this.timePassed;
 
+    this.periscope.update(currTime);
+
     //this.setAccelaration();
 
     //this.propeller1.updateVelocity(dif);
@@ -296,4 +296,5 @@ MySubmarine.prototype.update = function(currTime){
     this.propeller2.setAngle(angle, -1);*/
 
     this.timePassed = currTime;
+
 };

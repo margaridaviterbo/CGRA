@@ -44,7 +44,6 @@ LightingScene.prototype.init = function(application) {
 
 	// Scene elements
 	this.submarine = new MySubmarine(this);
-    this.periscope = new MyPeriscope(this);
 	this.plan = new MyQuad(this, 0, 5, 0, 5);
 	this.clock = new MyClock(this, 20, 1);
 	this.cylinder = new MyCylinder(this, 20, 1);
