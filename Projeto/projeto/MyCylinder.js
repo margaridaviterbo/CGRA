@@ -1,5 +1,5 @@
 /**
- * MyPrism
+ * MyCylinder
  * @constructor
  */
  function MyCylinder(scene, slices, stacks) {
@@ -28,7 +28,7 @@
 
     for (var j = 0; j < this.slices; j++) {
       this.vertices.push(Math.cos(j * angularStep),
-                         Math.sin(j * angularStep), 
+                         Math.sin(j * angularStep),
                          i / this.stacks);
 
       this.normals.push(Math.cos(j * angularStep),

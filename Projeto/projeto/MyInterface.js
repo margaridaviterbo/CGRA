@@ -101,5 +101,17 @@ MyInterface.prototype.processKeyboard = function(event) {
 		case (119):
 			this.scene.submarine.increaseVelocity();
 			break;
+
+        //p ou P
+        case (80):
+        case (112):
+            this.scene.periscope.move(1);
+            break;
+
+        //L ou l
+        case (76):
+        case (108):
+            this.scene.periscope.move(-1);
+            break;
 	};
 };
