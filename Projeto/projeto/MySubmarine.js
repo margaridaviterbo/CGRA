@@ -66,6 +66,8 @@
 
     this.rotationAngle = 0;
     this.rotationAngle2 = 0;
+    this.rotationAngle3 = 0;
+    this.rotationAngle4 = 0;
 
     this.positionX = 0;
     this.positionZ = 0;
@@ -198,6 +200,7 @@ MySubmarine.prototype.display = function(){
     //trapezio tras horizontal
     this.scene.pushMatrix();
         this.scene.translate(0, 0, -2.04);
+        this.scene.rotate(this.rotationAngle4, 1, 0, 0);
         this.scene.scale(2.34, 1, 1); //algo errado...
         if(this.currSubmarineAppearance == 3){
             this.submarineAppearenceBlue.apply();
@@ -253,16 +256,35 @@ MySubmarine.prototype.resetRotationAngle2 = function(){
     this.rotationAngle2 = 0;
 }
 
+MySubmarine.prototype.rotateVertically = function(orientation){
+
+    this.rotationAngle3 += Math.PI / 180 * orientation * this.scene.speed;
+
+    if(Math.abs(this.rotationAngle4) < Math.PI/2 || Math.abs(this.rotationAngle4) > 3*Math.PI/2){
+        this.rotationAngle4 += Math.PI / 180 * orientation * 4;
+    }
+
+    this.scene.torpedos[0].rotationAngle2 = this.rotationAngle3;
+}
+
+
+MySubmarine.prototype.resetRotationAngle4 = function(){
+    this.rotationAngle4 = 0;
+}
+
+
 MySubmarine.prototype.move = function(direction){
     //forward
     var x = Math.sin(this.rotationAngle);
     var z = Math.cos(this.rotationAngle);
+    var y = Math.sin(this.rotationAngle3);
 
     this.positionX += x*0.05*this.scene.speed;
     this.positionZ += z*0.05*this.scene.speed;
+    this.positionY += -y*0.05*this.scene.speed;
 
     //updates torpedo position
-    this.scene.torpedos[0].updateHorizontalPosition(this.positionX, this.positionZ);
+    this.scene.torpedos[0].updatePosition(this.positionX, this.positionY, this.positionZ);
 }
 
 MySubmarine.prototype.increaseVelocity = function(){
