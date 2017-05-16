@@ -113,6 +113,18 @@ MyInterface.prototype.processKeyboard = function(event) {
         case (108):
         this.scene.submarine.periscope.move(-1);
         break;
+
+        //q ou Q
+        case (81):
+        case (113):
+        this.scene.submarine.rotateVertically(-1);
+        break;
+
+        //e ou E
+        case (69):
+        case (101):
+        this.scene.submarine.rotateVertically(1);
+        break;
     };
 };
 
@@ -131,6 +143,18 @@ MyInterface.prototype.processKeyUp = function(event) {
         case (68):
         case (100):
         this.scene.submarine.resetRotationAngle2();
+        break;
+
+        //q ou Q
+        case (81):
+        case (113):
+        this.scene.submarine.resetRotationAngle4();
+        break;
+
+        //e ou E
+        case (69):
+        case (101):
+        this.scene.submarine.resetRotationAngle4();
         break;
     };
 };

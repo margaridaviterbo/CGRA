@@ -241,6 +241,7 @@ LightingScene.prototype.display = function() {
 	this.pushMatrix();
         this.translate(this.submarine.positionX, this.submarine.positionY, this.submarine.positionZ);
         this.rotate(this.submarine.rotationAngle, 0, 1, 0);
+        this.rotate(this.submarine.rotationAngle3, 1, 0, 0);
         this.submarine.display();
     this.popMatrix();
 
@@ -250,10 +251,15 @@ LightingScene.prototype.display = function() {
 		this.rotate(this.torpedos[0].rotationAngle, 0, 1, 0);
 		this.rotate(this.torpedos[0].orientation, 1, 0, 0);
 		this.rotate(-this.torpedos[0].rotationAngle, 0, 1, 0);
+        
+        this.rotate(this.torpedos[0].rotationAngle2, 1, 0, 0);
+
+		this.rotate(-this.torpedos[0].rotationAngle2, 1, 0, 0);
 		this.translate(0, 0, 0);
 
 
         this.rotate(this.torpedos[0].rotationAngle, 0, 1, 0);
+        this.rotate(this.torpedos[0].rotationAngle2, 1, 0, 0);
         this.torpedos[0].display();
     this.popMatrix();
 
