@@ -65,6 +65,7 @@
     //this.positionZ = 5;
 
     this.rotationAngle = 0;
+    this.rotationAngle2 = 0;
 
     this.positionX = 0;
     this.positionZ = 0;
@@ -211,6 +212,7 @@ MySubmarine.prototype.display = function(){
     this.scene.pushMatrix();
         this.scene.translate(0, 0, -2.04);
         this.scene.rotate(Math.PI/2, 0, 0, 1);
+        this.scene.rotate(this.rotationAngle2, 1, 0, 0);
         this.scene.scale(2.34, 1, 1);
         if(this.currSubmarineAppearance == 3){
             this.submarineAppearenceBlue.apply();
@@ -240,7 +242,15 @@ MySubmarine.prototype.rotate = function(orientation){
 
     this.rotationAngle += Math.PI / 180 * orientation * this.scene.speed;
 
+    if(Math.abs(this.rotationAngle2) < Math.PI/2 || Math.abs(this.rotationAngle2) > 3*Math.PI/2){
+        this.rotationAngle2 += Math.PI / 180 * orientation * 4;
+    }
+
     this.scene.torpedos[0].rotationAngle = this.rotationAngle;
+}
+
+MySubmarine.prototype.resetRotationAngle2 = function(){
+    this.rotationAngle2 = 0;
 }
 
 MySubmarine.prototype.move = function(direction){
