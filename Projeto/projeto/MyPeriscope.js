@@ -50,33 +50,11 @@ MyPeriscope.prototype.display = function(){
 
 MyPeriscope.prototype.move = function(direction){
 
-    if(this.scene.speed == 0){
-        if(direction == 1){
-            while(this.positionY < 0){
-                console.log("aqui\n");
-                this.positionY += 0.5/**0.01*/;
-            }
-        }
-        else{
-            while(this.positionY > -1){
-                console.log("aqui\n");
-                this.positionY += (-0.5)/**0.01*/;
-            }
-        }
+    if((direction == 1) && (this.positionY < 0)){
+        this.positionY += 0.05;
     }
-    else{
-        if(direction == 1){
-            while(this.positionY < 0){
-                console.log("aqui\n");
-                this.positionY += 0.5*Math.abs(this.scene.speed);
-            }
-        }
-        else{
-            while(this.positionY > -0.5){
-                console.log("aqui\n");
-                this.positionY += (-0.005)*Math.abs(this.scene.speed);
-            }
-        }
+    else if((direction == -1) && (this.positionY > -0.5)){
+        this.positionY -= 0.05;
     }
 
 
