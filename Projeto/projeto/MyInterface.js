@@ -105,13 +105,13 @@ MyInterface.prototype.processKeyboard = function(event) {
         //p ou P
         case (80):
         case (112):
-            this.scene.periscope.move(1);
+            this.scene.submarine.periscope.move(1);
             break;
 
         //L ou l
         case (76):
         case (108):
-            this.scene.periscope.move(-1);
+            this.scene.submarine.periscope.move(-1);
             break;
 	};
 };
