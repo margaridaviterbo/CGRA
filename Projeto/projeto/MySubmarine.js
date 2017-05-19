@@ -312,9 +312,15 @@ MySubmarine.prototype.update = function(currTime){
 
     this.periscope.update(currTime);
 
+    //this.propeller1.update(currTime);
+
+    //this.propeller2.update(currTime);
+
     //this.setAccelaration();
 
-    //this.propeller1.updateVelocity(dif);
+    this.propeller1.updateVelocity(currTime);
+
+    this.propeller2.updateVelocity(currTime);
 
     //console.log(this.propeller1.angularVelocity);
 
