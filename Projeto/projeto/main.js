@@ -24,6 +24,7 @@ serialInclude([
 	'MyTrapezium.js',
 	'MyTarget.js',
 	'MyTorpedo.js',
+    'MyPeriscope.js',
 
 	main=function() {
 		var app = new CGFapplication(document.body);

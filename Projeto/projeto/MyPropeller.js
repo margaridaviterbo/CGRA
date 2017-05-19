@@ -15,7 +15,7 @@
     this.angularVelocity;
     this.minVelocity = 2*Math.PI;
     this.acceleration = 0;
-    
+
  };
 
 MyPropeller.prototype = Object.create(CGFobject.prototype);
@@ -43,7 +43,7 @@ MyPropeller.prototype.display = function(){
         this.scene.scale(1/6, 1.2, 1/6);
         this.scene.rotate(Math.PI/4, 0, 0, 1);
         this.scene.translate(0, 0, -0.5);
-        
+
         this.scene.pushMatrix();
             this.prism.display();
         this.scene.popMatrix();
@@ -59,7 +59,7 @@ MyPropeller.prototype.display = function(){
             this.scene.rotate(Math.PI, 0, 1, 0);
             this.base.display();
         this.scene.popMatrix();
-    
+
     this.scene.popMatrix();
 }
 /*

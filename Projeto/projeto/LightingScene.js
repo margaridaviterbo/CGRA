@@ -38,7 +38,7 @@ LightingScene.prototype.init = function(application) {
 	this.light5 = true;
 	this.speed = 0;
 
-    this.textures = 'Fish';
+    this.textures = 'Rock';
 
 	this.paused = false;
 
@@ -182,7 +182,7 @@ LightingScene.prototype.updateLights = function() {
 };
 
 LightingScene.prototype.update = function(currTime){
-	
+
 	this.removeTarget();
 
     this.submarine.changeTexture();
@@ -200,7 +200,7 @@ LightingScene.prototype.removeTarget = function(){
 		this.targets.shift();
 		this.torpedos.pop();
 		this.torpedos.push(new MyTorpedo(this, this.submarine.positionX, this.submarine.positionY-1, this.submarine.positionZ, this.submarine.rotationAngle));
-		
+
 		this.destroy = false;
 	}
 }
@@ -241,26 +241,34 @@ LightingScene.prototype.display = function() {
 	this.pushMatrix();
         this.translate(this.submarine.positionX, this.submarine.positionY, this.submarine.positionZ);
         this.rotate(this.submarine.rotationAngle, 0, 1, 0);
+        this.rotate(this.submarine.rotationAngle3, 1, 0, 0);
         this.submarine.display();
     this.popMatrix();
 
 	this.pushMatrix();
-    
+
 		this.translate(this.torpedos[0].positionX, this.torpedos[0].positionY, this.torpedos[0].positionZ);
 		this.rotate(this.torpedos[0].rotationAngle, 0, 1, 0);
 		this.rotate(this.torpedos[0].orientation, 1, 0, 0);
 		this.rotate(-this.torpedos[0].rotationAngle, 0, 1, 0);
+        
+        this.rotate(this.torpedos[0].rotationAngle2, 1, 0, 0);
+
+		this.rotate(-this.torpedos[0].rotationAngle2, 1, 0, 0);
 		this.translate(0, 0, 0);
 
 
         this.rotate(this.torpedos[0].rotationAngle, 0, 1, 0);
+        this.rotate(this.torpedos[0].rotationAngle2, 1, 0, 0);
         this.torpedos[0].display();
     this.popMatrix();
 
+    //TODO FAZER CUBO DE ÁGUA GIGANTE
+
 	this.pushMatrix();
-		this.translate(5, 0, 5);
+		this.translate(100, 0, 100);
 		this.rotate(-Math.PI/2, 1, 0, 0);
-		this.scale(10, 10, 1);
+		this.scale(200, 200, 1);
 		this.oceanAppearance.apply(); //resize image
 		this.plan.display();
 	this.popMatrix();

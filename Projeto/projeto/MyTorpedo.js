@@ -14,6 +14,7 @@
     this.positionZ = positionZ;
 
     this.rotationAngle = angle;
+    this.rotationAngle2 = 0;
     this.orientation = 0;
 
     this.enableUpdate = true;
@@ -36,7 +37,7 @@
     this.metalAppearance.setDiffuse(0.376, 0.376, 0.376, 1);
     this.metalAppearance.setSpecular(1, 1, 1, 1);
     this.metalAppearance.setShininess(300);
-    
+
  };
 
 MyTorpedo.prototype = Object.create(CGFobject.prototype);
@@ -83,10 +84,11 @@ MyTorpedo.prototype.display = function(){
 
 }
 
-MyTorpedo.prototype.updateHorizontalPosition = function(posX, posZ){
+MyTorpedo.prototype.updatePosition = function(posX, posY, posZ){
 
     if (this.enableUpdate){
         this.positionX = posX;
+        this.positionY = posY - 1.1;
         this.positionZ = posZ;
     }
 }
@@ -116,7 +118,7 @@ MyTorpedo.prototype.calculateRotationAngle = function(){
 
     if (vector[0] > 0)
         return angle;
-    else 
+    else
         return 2*Math.PI - angle;
 
 }
@@ -155,7 +157,7 @@ MyTorpedo.prototype.animate = function(){
         this.scene.targets[0].positionX,
         4/5 * this.positionY,
         this.scene.targets[0].positionZ
-    ];         
+    ];
 
 }
 
@@ -166,7 +168,7 @@ MyTorpedo.prototype.update = function(currTime){
     if (this.rotateAnimation){
 
         var finalAngle = this.calculateRotationAngle();
-        
+
         if (this.rotationAngle >= finalAngle){
             this.rotateAnimation = false;
             this.bezierAnimation = true;
@@ -185,11 +187,11 @@ MyTorpedo.prototype.update = function(currTime){
 
             var t = this.t;
 
-            this.positionX = Math.pow((1-t), 3) * this.positionX + 3*Math.pow((1-t), 2) * t * this.P2[0] + 3*(1-t) * Math.pow(t, 2) * this.P3[0] + Math.pow(t, 3) * this.P4[0]; 
+            this.positionX = Math.pow((1-t), 3) * this.positionX + 3*Math.pow((1-t), 2) * t * this.P2[0] + 3*(1-t) * Math.pow(t, 2) * this.P3[0] + Math.pow(t, 3) * this.P4[0];
 
-            this.positionY = Math.pow((1-t), 3) * this.positionY + 3*Math.pow((1-t), 2) * t * this.P2[1] + 3*(1-t) * Math.pow(t, 2) * this.P3[1] + Math.pow(t, 3) * this.P4[1]; 
+            this.positionY = Math.pow((1-t), 3) * this.positionY + 3*Math.pow((1-t), 2) * t * this.P2[1] + 3*(1-t) * Math.pow(t, 2) * this.P3[1] + Math.pow(t, 3) * this.P4[1];
 
-            this.positionZ = Math.pow((1-t), 3) * this.positionZ + 3*Math.pow((1-t), 2) * t * this.P2[2] + 3*(1-t) * Math.pow(t, 2) * this.P3[2] + Math.pow(t, 3) * this.P4[2]; 
+            this.positionZ = Math.pow((1-t), 3) * this.positionZ + 3*Math.pow((1-t), 2) * t * this.P2[2] + 3*(1-t) * Math.pow(t, 2) * this.P3[2] + Math.pow(t, 3) * this.P4[2];
 
             this.t += 1/(this.animationTime * 10);
         }
@@ -200,4 +202,3 @@ MyTorpedo.prototype.update = function(currTime){
     }
     this.timePassed = currTime;
 };
-
