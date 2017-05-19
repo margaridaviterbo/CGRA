@@ -251,7 +251,7 @@ LightingScene.prototype.display = function() {
 		this.rotate(this.torpedos[0].rotationAngle, 0, 1, 0);
 		this.rotate(this.torpedos[0].orientation, 1, 0, 0);
 		this.rotate(-this.torpedos[0].rotationAngle, 0, 1, 0);
-        
+
         this.rotate(this.torpedos[0].rotationAngle2, 1, 0, 0);
 
 		this.rotate(-this.torpedos[0].rotationAngle2, 1, 0, 0);
@@ -263,12 +263,55 @@ LightingScene.prototype.display = function() {
         this.torpedos[0].display();
     this.popMatrix();
 
-    //TODO FAZER CUBO DE ÁGUA GIGANTE
-
+    //chao
 	this.pushMatrix();
-		this.translate(100, 0, 100);
+		this.translate(0, -250, 0);
 		this.rotate(-Math.PI/2, 1, 0, 0);
-		this.scale(200, 200, 1);
+		this.scale(500, 500, 1);
+		this.oceanAppearance.apply(); //resize image
+		this.plan.display();
+	this.popMatrix();
+
+    //teto
+    this.pushMatrix();
+		this.translate(0, 250, 0);
+		this.rotate(Math.PI/2, 1, 0, 0);
+		this.scale(500, 500, 1);
+		this.oceanAppearance.apply(); //resize image
+		this.plan.display();
+	this.popMatrix();
+
+    //tras
+    this.pushMatrix();
+		this.translate(0, 0, -250);
+		this.scale(500, 500, 1);
+		this.oceanAppearance.apply(); //resize image
+		this.plan.display();
+	this.popMatrix();
+
+    //frente
+    this.pushMatrix();
+		this.translate(0, 0, 250);
+		this.rotate(Math.PI, 1, 0, 0);
+		this.scale(500, 500, 1);
+		this.oceanAppearance.apply(); //resize image
+		this.plan.display();
+	this.popMatrix();
+
+    //esquerda
+    this.pushMatrix();
+		this.translate(-250, 0, 0);
+		this.rotate(Math.PI/2, 0, 1, 0);
+		this.scale(500, 500, 1);
+		this.oceanAppearance.apply(); //resize image
+		this.plan.display();
+	this.popMatrix();
+
+    //direita
+    this.pushMatrix();
+		this.translate(250, 0, 0);
+		this.rotate(-Math.PI/2, 0, 1, 0);
+		this.scale(500, 500, 1);
 		this.oceanAppearance.apply(); //resize image
 		this.plan.display();
 	this.popMatrix();
