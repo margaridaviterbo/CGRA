@@ -53,7 +53,7 @@ LightingScene.prototype.init = function(application) {
 	this.target2 = new MyTarget(this, 7, 6);
 	this.targets = [this.target1, this.target2];
 
-	this.torpedos = [new MyTorpedo(this, this.submarine.positionX, this.submarine.positionY-1, this.submarine.positionZ, this.submarine.rotationAngle)];
+	this.torpedos = [new MyTorpedo(this, this.submarine.positionX, this.submarine.positionY-1, this.submarine.positionZ, this.submarine.rotationAngle, 0)];
 
 	this.destroy = false;
 
@@ -82,7 +82,6 @@ LightingScene.prototype.init = function(application) {
 	this.boardAppearance.loadTexture('../resources/images/board.png');
 
 	this.setUpdatePeriod(100);
-
 };
 
 LightingScene.prototype.pauseContinue = function(){
@@ -97,7 +96,8 @@ LightingScene.prototype.pauseContinue = function(){
 };
 
 LightingScene.prototype.initCameras = function() {
-	this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(30, 30, 30), vec3.fromValues(0, 0, 0));
+	//this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(30, 30, 30), vec3.fromValues(0, 0, 0));
+	this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(100, 100, 100), vec3.fromValues(0, 0, 0));
 };
 
 LightingScene.prototype.initLights = function() {
@@ -239,28 +239,33 @@ LightingScene.prototype.display = function() {
 	}
 
 	this.pushMatrix();
-        this.translate(this.submarine.positionX, this.submarine.positionY, this.submarine.positionZ);
-        this.rotate(this.submarine.rotationAngle, 0, 1, 0);
-        this.rotate(this.submarine.rotationAngle3, 1, 0, 0);
+
+		this.translate(this.submarine.positionX, this.submarine.positionY, this.submarine.positionZ);
+
+		this.rotate(this.submarine.rotationAngle, 0, 1, 0);
+		this.rotate(this.submarine.rotationAngle3, 1, 0, 0);
+
         this.submarine.display();
+		
     this.popMatrix();
 
 	this.pushMatrix();
 
+		//Translation
 		this.translate(this.torpedos[0].positionX, this.torpedos[0].positionY, this.torpedos[0].positionZ);
-		this.rotate(this.torpedos[0].rotationAngle, 0, 1, 0);
-		this.rotate(this.torpedos[0].orientation, 1, 0, 0);
-		this.rotate(-this.torpedos[0].rotationAngle, 0, 1, 0);
-        
-        this.rotate(this.torpedos[0].rotationAngle2, 1, 0, 0);
 
-		this.rotate(-this.torpedos[0].rotationAngle2, 1, 0, 0);
+		//Horizontal Rotation
+		this.rotate(this.torpedos[0].horizontalRotAngle, 0, 1, 0);
+
+		//Vertical Rotation
+		this.rotate(this.torpedos[0].horizontalRotAngle, 0, 1, 0);
+		this.rotate(this.torpedos[0].verticalRotAngle, 1, 0, 0);
+		this.rotate(-this.torpedos[0].horizontalRotAngle, 0, 1, 0);
 		this.translate(0, 0, 0);
 
+		//display
+        //this.torpedos[0].display();
 
-        this.rotate(this.torpedos[0].rotationAngle, 0, 1, 0);
-        this.rotate(this.torpedos[0].rotationAngle2, 1, 0, 0);
-        this.torpedos[0].display();
     this.popMatrix();
 
     //TODO FAZER CUBO DE ÁGUA GIGANTE
