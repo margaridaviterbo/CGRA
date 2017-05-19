@@ -245,26 +245,31 @@ LightingScene.prototype.display = function() {
 		this.rotate(this.submarine.rotationAngle, 0, 1, 0);
 		this.rotate(this.submarine.rotationAngle3, 1, 0, 0);
 
+		if (this.torpedos[0].attached){
+			this.pushMatrix();
+				this.translate(0, -1, 0);
+				this.torpedos[0].display();
+			this.popMatrix();
+		}
+
         this.submarine.display();
-		
+
     this.popMatrix();
 
 	this.pushMatrix();
 
-		//Translation
-		this.translate(this.torpedos[0].positionX, this.torpedos[0].positionY, this.torpedos[0].positionZ);
+		//tratar das curvas de bezier
 
-		//Horizontal Rotation
-		this.rotate(this.torpedos[0].horizontalRotAngle, 0, 1, 0);
+		if (!this.torpedos[0].attached){
 
-		//Vertical Rotation
-		this.rotate(this.torpedos[0].horizontalRotAngle, 0, 1, 0);
-		this.rotate(this.torpedos[0].verticalRotAngle, 1, 0, 0);
-		this.rotate(-this.torpedos[0].horizontalRotAngle, 0, 1, 0);
-		this.translate(0, 0, 0);
+			this.translate(this.torpedos[0].positionX, this.torpedos[0].positionY, this.torpedos[0].positionZ);
+			this.rotate(this.torpedos[0].horizontalRotAngle, 0, 1, 0);			
+			this.rotate(this.torpedos[0].verticalRotAngle, 1, 0, 0);
+			this.torpedos[0].display();
+		}
 
 		//display
-        //this.torpedos[0].display();
+        
 
     this.popMatrix();
 

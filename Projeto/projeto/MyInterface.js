@@ -88,6 +88,7 @@ MyInterface.prototype.processKeyboard = function(event) {
         case (70):
         case (102):
         this.scene.torpedos[0].animate();
+        this.scene.torpedos[0].attached = false;
         break;
 
         //s ou S

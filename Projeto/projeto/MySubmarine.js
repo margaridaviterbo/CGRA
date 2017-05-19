@@ -65,7 +65,7 @@
     //this.positionZ = 5;
 
     this.positionX = 0;
-    this.positionY = 0;
+    this.positionY = 3;
     this.positionZ = 0;
 
     this.rotationAngle = 0; //Horizontal angle
@@ -102,7 +102,9 @@ MySubmarine.prototype.rotate = function(orientation){
         this.rotationAngle2 += Math.PI / 180 * orientation * 4;
     }
 
-    this.scene.torpedos[0].horizontalRotAngle = this.rotationAngle;
+    if (this.scene.torpedos[0].enableUpdate){
+        this.scene.torpedos[0].horizontalRotAngle = this.rotationAngle;
+    }
 }
 
 MySubmarine.prototype.resetRotationAngle2 = function(){
@@ -116,8 +118,9 @@ MySubmarine.prototype.rotateVertically = function(orientation){
     if(Math.abs(this.rotationAngle4) < Math.PI/2 || Math.abs(this.rotationAngle4) > 3*Math.PI/2){
         this.rotationAngle4 += Math.PI / 180 * orientation * 4;
     }
-
-    this.scene.torpedos[0].verticalRotAngle = this.rotationAngle3;
+    if (this.scene.torpedos[0].enableUpdate){
+        this.scene.torpedos[0].verticalRotAngle = this.rotationAngle3;
+    }
 }
 
 
