@@ -39,7 +39,7 @@ MyPropeller.prototype.display = function(){
 
     //prism
     this.scene.pushMatrix();
-    //this.scene.rotate(this.rotationAngle, 0, 0, 1);
+    this.scene.rotate(this.rotationAngle, 0, 0, 1);
     this.scene.scale(1/6, 1.2, 1/6);
     this.scene.rotate(Math.PI/4, 0, 0, 1);
     this.scene.translate(0, 0, -0.5);
@@ -50,14 +50,12 @@ MyPropeller.prototype.display = function(){
 
     //prism front
     this.scene.pushMatrix();
-    this.scene.rotate(this.rotationAngle, 0, 0, 1);
     this.scene.translate(0, 0, 1);
     this.base.display();
     this.scene.popMatrix();
 
     //prism back
     this.scene.pushMatrix();
-    this.scene.rotate(this.rotationAngle, 0, 0, 1);
     this.scene.rotate(Math.PI, 0, 1, 0);
     this.base.display();
     this.scene.popMatrix();
@@ -65,22 +63,17 @@ MyPropeller.prototype.display = function(){
     this.scene.popMatrix();
 }
 
-MyPropeller.prototype.setAngle = function(currTime){
+MyPropeller.prototype.setAngle = function(angle, orientation){
 
-    var dif = currTime - this.timePassed;
+     if (isNaN(angle))
+         return;
 
+     if (orientation == -1){
 
-    var angle = dif * 2 * Math.PI / 1000;
+             this.rotationAngle += angle * Math.PI / 180 + angle * Math.PI / 180 * Math.abs(this.scene.speed);
+     }
 
-    if (isNaN(angle))
-    return;
-
-    if (this.scene.speed < 0){
-        this.rotationAngle -= angle * Math.PI / 180 - angle * Math.PI / 180 * this.scene.speed;
-    }
-    else{
-        this.rotationAngle += angle * Math.PI / 180 + angle * Math.PI / 180*this.scene.speed;
-    }
-    this.timePassed = currTime;
-
+     else{
+             this.rotationAngle -= angle * Math.PI / 180 + angle * Math.PI / 180 * Math.abs(this.scene.speed);
+     }
 }

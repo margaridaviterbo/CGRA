@@ -186,10 +186,14 @@ MySubmarine.prototype.update = function(currTime){
 
     var dif = currTime - this.timePassed;
 
-    this.propeller1.setAngle(currTime);
-    this.propeller2.setAngle(currTime);
+    var angle = dif * 2 * Math.PI * 60/ 1000;
+
+    this.propeller1.setAngle(angle, 1);
+    this.propeller2.setAngle(angle, -1);
 
     this.timePassed = currTime;
+
+    var dif = currTime - this.timePassed;
 
     /*this.propeller1.updateVelocity(currTime);
     this.propeller2.updateVelocity(currTime);*/
