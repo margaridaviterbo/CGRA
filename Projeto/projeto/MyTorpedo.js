@@ -2,7 +2,7 @@
  * MyTorpedo
  * @constructor
  */
- function MyTorpedo(scene, positionX, positionY, positionZ, angle) {
+ function MyTorpedo(scene, positionX, positionY, positionZ, horizontalAngle, verticalAngle) {
     CGFobject.call(this,scene);
 
     this.cylinder = new MyCylinder(scene, 20, 1);
@@ -13,11 +13,13 @@
     this.positionY = positionY;
     this.positionZ = positionZ;
 
-    this.rotationAngle = angle;
-    this.rotationAngle2 = 0;
+    this.horizontalRotAngle = horizontalAngle;
+    this.verticalRotAngle = verticalAngle;
     this.orientation = 0;
 
     this.enableUpdate = true;
+
+    this.attached = true;
 
     this.visible = true;
 
@@ -87,6 +89,7 @@ MyTorpedo.prototype.display = function(){
 MyTorpedo.prototype.updatePosition = function(posX, posY, posZ){
 
     if (this.enableUpdate){
+        
         this.positionX = posX;
         this.positionY = posY - 1.1;
         this.positionZ = posZ;
@@ -169,13 +172,13 @@ MyTorpedo.prototype.update = function(currTime){
 
         var finalAngle = this.calculateRotationAngle();
 
-        if (this.rotationAngle >= finalAngle){
+        if (this.horizontalRotAngle >= finalAngle){
             this.rotateAnimation = false;
             this.bezierAnimation = true;
             this.timePassed = 0;
         }
         else{
-            this.rotationAngle += finalAngle/11;
+            this.horizontalRotAngle += finalAngle/11;
         }
     }
 
