@@ -53,7 +53,7 @@ LightingScene.prototype.init = function(application) {
 	this.target2 = new MyTarget(this, 7, 6);
 	this.targets = [this.target1, this.target2];
 
-	this.torpedos = [new MyTorpedo(this, this.submarine.positionX, this.submarine.positionY-1, this.submarine.positionZ, this.submarine.rotationAngle, 0)];
+	this.torpedos = [new MyTorpedo(this, this.submarine.positionX, this.submarine.positionY-1, this.submarine.positionZ, this.submarine.rotationAngle, this.submarine.rotationAngle3)];
 
 	this.destroy = false;
 
@@ -96,8 +96,7 @@ LightingScene.prototype.pauseContinue = function(){
 };
 
 LightingScene.prototype.initCameras = function() {
-	//this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(30, 30, 30), vec3.fromValues(0, 0, 0));
-	this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(100, 100, 100), vec3.fromValues(0, 0, 0));
+	this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(30, 30, 30), vec3.fromValues(0, 0, 0));
 };
 
 LightingScene.prototype.initLights = function() {
@@ -199,7 +198,7 @@ LightingScene.prototype.removeTarget = function(){
 	if (this.destroy){
 		this.targets.shift();
 		this.torpedos.pop();
-		this.torpedos.push(new MyTorpedo(this, this.submarine.positionX, this.submarine.positionY-1, this.submarine.positionZ, this.submarine.rotationAngle));
+		this.torpedos.push(new MyTorpedo(this, this.submarine.positionX, this.submarine.positionY-1, this.submarine.positionZ, this.submarine.rotationAngle, this.submarine.rotationAngle3));
 
 		this.destroy = false;
 	}
@@ -261,10 +260,18 @@ LightingScene.prototype.display = function() {
 		//tratar das curvas de bezier
 
 		if (!this.torpedos[0].attached){
+			this.translate(this.torpedos[0].positionX, this.torpedos[0].positionY, this.torpedos[0].positionZ);
+			this.rotate(this.torpedos[0].horizontalRotAngle, 0, 1, 0);
+			this.rotate(this.torpedos[0].orientation, 1, 0, 0);
+			this.rotate(-this.torpedos[0].horizontalRotAngle, 0, 1, 0);
+			this.translate(0, 0, 0);
 
+
+			this.rotate(this.torpedos[0].horizontalRotAngle, 0, 1, 0);
+			/*
 			this.translate(this.torpedos[0].positionX, this.torpedos[0].positionY, this.torpedos[0].positionZ);
 			this.rotate(this.torpedos[0].horizontalRotAngle, 0, 1, 0);			
-			this.rotate(this.torpedos[0].verticalRotAngle, 1, 0, 0);
+			this.rotate(this.torpedos[0].verticalRotAngle, 1, 0, 0);*/
 			this.torpedos[0].display();
 		}
 

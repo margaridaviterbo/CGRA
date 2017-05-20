@@ -141,7 +141,6 @@ MySubmarine.prototype.calculateSumVectors = function(){
 MySubmarine.prototype.move = function(direction){
 
     var aux = this.calculateSumVectors();
-    var distance = Math.sqrt(aux[0]*aux[0] + aux[1]*aux[1] + aux[2]*aux[2]);
 
     var angle = Math.PI/2+this.rotationAngle3;
 

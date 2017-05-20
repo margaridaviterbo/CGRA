@@ -21,9 +21,6 @@
 
     this.attached = true;
 
-    this.visible = true;
-
-    this.rotateAnimation = false;
     this.bezierAnimation = false;
 
     this.animationTime;
@@ -134,33 +131,68 @@ MyTorpedo.prototype.calculateDistance = function(){
 
 }
 
+MyTorpedo.prototype.calculateDirection = function(){
+
+    var vectorHorizontal = [Math.sin(this.horizontalRotAngle), 0, Math.cos(this.horizontalRotAngle)];
+    var vectorVertical = [0, Math.sin(-this.verticalRotAngle), Math.cos(-this.verticalRotAngle)];
+
+    var final = [vectorHorizontal[0] + vectorVertical[0], vectorHorizontal[1] + vectorVertical[1], vectorHorizontal[2] + vectorVertical[2]];
+
+    var distance = Math.sqrt(final[0]*final[0] + final[1]*final[1] + final[2]*final[2]);
+
+    var angle = Math.PI/2+this.verticalRotAngle;
+
+    var direction = [
+        Math.sin(angle) * Math.sin(this.horizontalRotAngle),
+        Math.cos(angle),
+        Math.sin(angle) * Math.cos(this.horizontalRotAngle)
+    ];
+
+    return direction;
+}
+
+MyTorpedo.prototype.calculateBezierPoints = function(){
+
+    var direction = this.calculateDirection();
+
+    var vector = this.calculateVector();
+
+    console.log("direction: " + direction[0] + " " + direction[1] + " " + direction[2]);
+    console.log("position: " + this.positionX + " " + this.positionY + " " + this.positionZ);
+
+    this.P2 = [
+        this.positionX +direction[0] * 6,
+        this.positionY + direction[1] * 6,
+        this.positionZ + direction[2] * 6,
+    ];
+
+    console.log("p2: " + this.P2[0] + " " + this.P2[1] + " " + this.P2[2]);
+
+    this.P3 = [
+        this.scene.targets[0].positionX,
+        this.positionY + 3,
+        this.scene.targets[0].positionZ
+    ];
+
+}
+
 MyTorpedo.prototype.animate = function(){
 
     if (this.scene.targets.length == 0)
         return;
 
+    this.scene.torpedos[0].attached = false;
+
     //to not update with submarine
     this.enableUpdate = false;
 
-    this.rotateAnimation = true;
+    this.bezierAnimation = true;
     this.timePassed = 0;
 
-    var vector = this.calculateVector();
     var distance = this.calculateDistance();
     this.animationTime = parseInt(distance);
 
-    //calculate bezier points P2 and P3
-    this.P2 = [
-        4/5 * vector[0]+this.positionX,
-        this.positionY,
-        4/5 * vector[2]+this.positionZ
-    ];
-
-    this.P3 = [
-        this.scene.targets[0].positionX,
-        4/5 * this.positionY,
-        this.scene.targets[0].positionZ
-    ];
+    this.calculateBezierPoints();
 
 }
 
@@ -168,25 +200,13 @@ MyTorpedo.prototype.update = function(currTime){
 
     var dif = currTime - this.timePassed;
 
-    if (this.rotateAnimation){
+    if(this.bezierAnimation){
 
         var finalAngle = this.calculateRotationAngle();
 
-        if (this.horizontalRotAngle >= finalAngle){
-            this.rotateAnimation = false;
-            this.bezierAnimation = true;
-            this.timePassed = 0;
-        }
-        else{
-            this.horizontalRotAngle += finalAngle/11;
-        }
-    }
-
-    if(this.bezierAnimation){
-
         if(this.t <= 1){
 
-            this.orientation += Math.PI / (this.animationTime*10*2);
+            this.orientation += (Math.PI/2-this.verticalRotAngle)/(this.animationTime*10);
 
             var t = this.t;
 
@@ -197,6 +217,8 @@ MyTorpedo.prototype.update = function(currTime){
             this.positionZ = Math.pow((1-t), 3) * this.positionZ + 3*Math.pow((1-t), 2) * t * this.P2[2] + 3*(1-t) * Math.pow(t, 2) * this.P3[2] + Math.pow(t, 3) * this.P4[2];
 
             this.t += 1/(this.animationTime * 10);
+
+            this.horizontalRotAngle += finalAngle/(this.animationTime * 10);
         }
         else{
             this.bezierAnimation = false;
