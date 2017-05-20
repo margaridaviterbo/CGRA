@@ -149,7 +149,7 @@ MySubmarine.prototype.move = function(direction){
         Math.sin(angle) * Math.sin(this.rotationAngle),
         Math.cos(angle),
         Math.sin(angle) * Math.cos(this.rotationAngle)
-    ];     
+    ];
 
     var x = direction[0];
     var y = direction[1];
@@ -186,7 +186,14 @@ MySubmarine.prototype.update = function(currTime){
 
     var dif = currTime - this.timePassed;
 
+    this.propeller1.setAngle(currTime);
+    this.propeller2.setAngle(currTime);
+
     this.timePassed = currTime;
+
+    /*this.propeller1.updateVelocity(currTime);
+    this.propeller2.updateVelocity(currTime);*/
+
 
 };
 
@@ -338,4 +345,3 @@ MySubmarine.prototype.display = function(){
         this.trapezium.display();
     this.scene.popMatrix();
 }
-
