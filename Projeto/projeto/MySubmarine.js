@@ -195,10 +195,6 @@ MySubmarine.prototype.update = function(currTime){
 
     var dif = currTime - this.timePassed;
 
-    /*this.propeller1.updateVelocity(currTime);
-    this.propeller2.updateVelocity(currTime);*/
-
-
 };
 
 
@@ -297,6 +293,7 @@ MySubmarine.prototype.display = function(){
         this.scene.translate(-0.73/2-0.4/2, -0.25, -2.04);
         this.scene.scale(0.4/2, 0.4/2, 0.4);
         this.scene.translate(0, 0, 0.5);
+        this.scene.rotate(Math.PI/2, 0, 0, 1);
         if(this.currSubmarineAppearance == 3){
             this.submarineAppearenceBlue.apply();
         }
