@@ -202,6 +202,7 @@ MySubmarine.prototype.display = function(){
     //cilindro principal
     this.scene.pushMatrix();
         this.scene.translate(0, 0, -2.04);
+        this.scene.rotate(Math.PI, 0, 0, 1);
         this.scene.scale(0.73/2, 1/2, 4.08);
         this.bodyTextures[this.currSubmarineAppearance].apply();
         this.cylinder.display();
