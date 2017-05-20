@@ -39,7 +39,7 @@ MyPropeller.prototype.display = function(){
 
     //prism
     this.scene.pushMatrix();
-        this.scene.rotate(this.rotationAngle, 0, 0, 1);
+        //this.scene.rotate(this.rotationAngle, 0, 0, 1);
         this.scene.scale(1/6, 1.2, 1/6);
         this.scene.rotate(Math.PI/4, 0, 0, 1);
         this.scene.translate(0, 0, -0.5);
@@ -51,12 +51,14 @@ MyPropeller.prototype.display = function(){
         //prism front
         this.scene.pushMatrix();
             this.scene.translate(0, 0, 1);
+            this.scene.rotate(this.rotationAngle, 0, 0, 1);
             this.base.display();
         this.scene.popMatrix();
 
         //prism back
         this.scene.pushMatrix();
             this.scene.rotate(Math.PI, 0, 1, 0);
+            this.scene.rotate(this.rotationAngle, 0, 0, 1);
             this.base.display();
         this.scene.popMatrix();
 
@@ -91,5 +93,21 @@ MyPropeller.prototype.setAngle = function(angle, orientation){
 }*/
 
 MyPropeller.prototype.updateVelocity = function(currTime){
-    this.angularVelocity = this.minVelocity + this.acceleration*currTime;
+    //this.angularVelocity = this.minVelocity + this.acceleration*currTime;
+
+    var dif = currTime - this.timePassed;
+
+    var angle = dif * 2 * Math.PI / 1000;
+
+    this.rotationAngle += angle * (Math.PI / 180) * this.scene.speed;
+
 }
+
+MyPropeller.prototype.update = function(currTime){
+
+    var dif = currTime - this.timePassed;
+
+    this.updateVelocity(currTime);
+
+    this.timePassed = currTime;
+};
