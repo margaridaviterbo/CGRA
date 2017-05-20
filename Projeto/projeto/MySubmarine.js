@@ -148,7 +148,7 @@ MySubmarine.prototype.move = function(direction){
         Math.sin(angle) * Math.sin(this.rotationAngle),
         Math.cos(angle),
         Math.sin(angle) * Math.cos(this.rotationAngle)
-    ];     
+    ];
 
     var x = direction[0];
     var y = direction[1];
@@ -185,7 +185,14 @@ MySubmarine.prototype.update = function(currTime){
 
     var dif = currTime - this.timePassed;
 
+    var angle = dif * 2 * Math.PI * 60/ 1000;
+
+    this.propeller1.setAngle(angle, 1);
+    this.propeller2.setAngle(angle, -1);
+
     this.timePassed = currTime;
+
+    var dif = currTime - this.timePassed;
 
 };
 
@@ -285,6 +292,7 @@ MySubmarine.prototype.display = function(){
         this.scene.translate(-0.73/2-0.4/2, -0.25, -2.04);
         this.scene.scale(0.4/2, 0.4/2, 0.4);
         this.scene.translate(0, 0, 0.5);
+        this.scene.rotate(Math.PI/2, 0, 0, 1);
         if(this.currSubmarineAppearance == 3){
             this.submarineAppearenceBlue.apply();
         }
@@ -337,4 +345,3 @@ MySubmarine.prototype.display = function(){
         this.trapezium.display();
     this.scene.popMatrix();
 }
-
