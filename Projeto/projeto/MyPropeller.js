@@ -95,28 +95,4 @@ MyPropeller.prototype.setAngle = function(angle, orientation){
                 this.rotationAngle -= angle * Math.PI / 180 + angle * Math.PI / 180 * Math.abs(this.scene.speed);
         }
     }
-
-
-
-
-    /*     if (orientation == -1){
-
-             if (this.scene.speed < 0){
-                 this.rotationAngle -= angle * Math.PI / 180 + angle * Math.PI / 180 * Math.abs(this.scene.speed);
-             }
-             else{
-                 this.rotationAngle += angle * Math.PI / 180 + angle * Math.PI / 180 * Math.abs(this.scene.speed);
-             }
-         }
-
-         else{
-
-             if (this.scene.speed < 0){
-                 this.rotationAngle += angle * Math.PI / 180 + angle * Math.PI / 180 * Math.abs(this.scene.speed);
-             }
-             else{
-                 this.rotationAngle -= angle * Math.PI / 180 + angle * Math.PI / 180 * Math.abs(this.scene.speed);
-             }
-         }*/
-
 }

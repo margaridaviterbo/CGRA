@@ -86,7 +86,7 @@ MyTorpedo.prototype.display = function(){
 MyTorpedo.prototype.updatePosition = function(posX, posY, posZ){
 
     if (this.enableUpdate){
-        
+
         this.positionX = posX;
         this.positionY = posY - 1.1;
         this.positionZ = posZ;
@@ -157,8 +157,8 @@ MyTorpedo.prototype.calculateBezierPoints = function(){
 
     var vector = this.calculateVector();
 
-    console.log("direction: " + direction[0] + " " + direction[1] + " " + direction[2]);
-    console.log("position: " + this.positionX + " " + this.positionY + " " + this.positionZ);
+    //console.log("direction: " + direction[0] + " " + direction[1] + " " + direction[2]);
+    //console.log("position: " + this.positionX + " " + this.positionY + " " + this.positionZ);
 
     this.P2 = [
         this.positionX +direction[0] * 6,
@@ -166,7 +166,7 @@ MyTorpedo.prototype.calculateBezierPoints = function(){
         this.positionZ + direction[2] * 6,
     ];
 
-    console.log("p2: " + this.P2[0] + " " + this.P2[1] + " " + this.P2[2]);
+    //console.log("p2: " + this.P2[0] + " " + this.P2[1] + " " + this.P2[2]);
 
     this.P3 = [
         this.scene.targets[0].positionX,
