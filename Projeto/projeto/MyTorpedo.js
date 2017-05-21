@@ -239,8 +239,8 @@ MyTorpedo.prototype.update = function(currTime){
             var cos = escalar / (n1*n2);
             //console.log(n1*n2);
             //console.log(cos);
-            this.verticalRotAngle = Math.acos(cos);  //angulo com y
-
+            //this.verticalRotAngle = Math.acos(cos);  //angulo com y
+            this.orientation += finalAngle/(this.animationTime*10);
             //console.log(this.verticalRotAngle);
 
 
@@ -253,7 +253,11 @@ MyTorpedo.prototype.update = function(currTime){
             var cos = escalar / (n1*n2);
             //console.log(n1*n2);
             //console.log(cos);
-            this.horizontalRotAngle = Math.acos(cos); //angulo com z
+
+                this.horizontalRotAngle = Math.acos(cos); //angulo com z
+
+
+
 
             //console.log(this.horizontalRotAngle);
 /*

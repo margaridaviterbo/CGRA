@@ -264,7 +264,7 @@ LightingScene.prototype.display = function() {
 
 			this.translate(this.torpedos[0].positionX, this.torpedos[0].positionY, this.torpedos[0].positionZ);
 			this.rotate(this.torpedos[0].horizontalRotAngle, 0, 1, 0);
-			this.rotate(this.torpedos[0].verticalRotAngle, 1, 0, 0);
+			this.rotate(this.torpedos[0].orientation, 1, 0, 0);
 			this.torpedos[0].display();
 		}
 
