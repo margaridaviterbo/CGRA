@@ -38,6 +38,7 @@ LightingScene.prototype.init = function(application) {
 	this.light5 = true;
 	this.speed = 0;
 
+    //default texture
     this.textures = 'Rock';
 
 	this.paused = false;
