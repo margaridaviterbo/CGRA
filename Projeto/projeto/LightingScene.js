@@ -233,19 +233,20 @@ LightingScene.prototype.display = function() {
 
 	// ---- BEGIN Primitive drawing section
 
+    //targets
 	for(var i=0; i<this.targets.length; i++){
 		this.pushMatrix();
 				this.targets[i].display();
 		this.popMatrix();
 	}
 
+    //submerine and torpedo
 	this.pushMatrix();
-
 		this.translate(this.submarine.positionX, this.submarine.positionY, this.submarine.positionZ);
-
 		this.rotate(this.submarine.rotationAngle, 0, 1, 0);
 		this.rotate(this.submarine.rotationAngle3, 1, 0, 0);
 
+        //when torpedo is attached to submarine <=> not launched
 		if (this.torpedos[0].attached){
 			this.pushMatrix();
 				this.translate(0, -1, 0);
@@ -254,80 +255,73 @@ LightingScene.prototype.display = function() {
 		}
 
         this.submarine.display();
-
     this.popMatrix();
 
+    //torpedo
 	this.pushMatrix();
-
-		//tratar das curvas de bezier
-
+		//handling bezier curves <=> torpedo launched
 		if (!this.torpedos[0].attached){
-
 			this.translate(this.torpedos[0].positionX, this.torpedos[0].positionY, this.torpedos[0].positionZ);
 			this.rotate(this.torpedos[0].horizontalRotAngle, 0, 1, 0);
 			this.rotate(this.torpedos[0].orientation, 1, 0, 0);
 			this.torpedos[0].display();
 		}
-
-		//display
-
-
     this.popMatrix();
 
-    //chao
+    //floor
 	this.pushMatrix();
 		this.translate(0, -250, 0);
 		this.rotate(-Math.PI/2, 1, 0, 0);
 		this.scale(500, 500, 1);
-		this.oceanAppearance.apply(); //resize image
+		this.oceanAppearance.apply();
 		this.plan.display();
 	this.popMatrix();
 
-    //teto
+    //ceiling
     this.pushMatrix();
 		this.translate(0, 250, 0);
 		this.rotate(Math.PI/2, 1, 0, 0);
 		this.scale(500, 500, 1);
-		this.oceanAppearance.apply(); //resize image
+		this.oceanAppearance.apply();
 		this.plan.display();
 	this.popMatrix();
 
-    //tras
+    //back
     this.pushMatrix();
 		this.translate(0, 0, -250);
 		this.scale(500, 500, 1);
-		this.oceanAppearance.apply(); //resize image
+		this.oceanAppearance.apply();
 		this.plan.display();
 	this.popMatrix();
 
-    //frente
+    //front
     this.pushMatrix();
 		this.translate(0, 0, 250);
 		this.rotate(Math.PI, 1, 0, 0);
 		this.scale(500, 500, 1);
-		this.oceanAppearance.apply(); //resize image
+		this.oceanAppearance.apply();
 		this.plan.display();
 	this.popMatrix();
 
-    //esquerda
+    //left
     this.pushMatrix();
 		this.translate(-250, 0, 0);
 		this.rotate(Math.PI/2, 0, 1, 0);
 		this.scale(500, 500, 1);
-		this.oceanAppearance.apply(); //resize image
+		this.oceanAppearance.apply();
 		this.plan.display();
 	this.popMatrix();
 
-    //direita
+    //right
     this.pushMatrix();
 		this.translate(250, 0, 0);
 		this.rotate(-Math.PI/2, 0, 1, 0);
 		this.scale(500, 500, 1);
-		this.oceanAppearance.apply(); //resize image
+		this.oceanAppearance.apply();
 		this.plan.display();
 	this.popMatrix();
 
-	//poste
+	//clock column
 	this.pushMatrix();
 		this.translate(8, 0, 0.1);
 		this.scale(0.1, 4, 0.1);
