@@ -16,45 +16,44 @@ MyUnitCubeQuad.prototype.constructor = MyUnitCubeQuad;
 
 MyUnitCubeQuad.prototype.display = function () {
 
-  //face frente
+  //front face
   this.scene.pushMatrix();
-  this.scene.translate(0, 0, 0.5);
-  this.quad.display();
+    this.scene.translate(0, 0, 0.5);
+    this.quad.display();
   this.scene.popMatrix();
 
-  //face trás
+  //back face
   this.scene.pushMatrix();
-  this.scene.translate(0,0,-0.5);
-  this.scene.rotate(Math.PI, 0, 1, 0);
-  this.quad.display();
+    this.scene.translate(0,0,-0.5);
+    this.scene.rotate(Math.PI, 0, 1, 0);
+    this.quad.display();
   this.scene.popMatrix();
 
-  //face esquerda
+  //left face
   this.scene.pushMatrix();
-  this.scene.translate(-0.5, 0, 0);
-  this.scene.rotate(-Math.PI/2, 0, 1, 0);
-  this.quad.display();
+    this.scene.translate(-0.5, 0, 0);
+    this.scene.rotate(-Math.PI/2, 0, 1, 0);
+    this.quad.display();
   this.scene.popMatrix();
 
-  //face direita
+  //right face
   this.scene.pushMatrix();
-  this.scene.translate(0.5, 0, 0);
-  this.scene.rotate(Math.PI/2, 0, 1, 0);
-  this.quad.display();
+    this.scene.translate(0.5, 0, 0);
+    this.scene.rotate(Math.PI/2, 0, 1, 0);
+    this.quad.display();
   this.scene.popMatrix();
 
-  //face baixo
+  //down face
   this.scene.pushMatrix();
-  this.scene.translate(0, -0.5, 0);
-  this.scene.rotate(Math.PI/2, 1, 0, 0);
-  this.quad.display();
+    this.scene.translate(0, -0.5, 0);
+    this.scene.rotate(Math.PI/2, 1, 0, 0);
+    this.quad.display();
   this.scene.popMatrix();
 
-  //face cima
+  //up face
   this.scene.pushMatrix();
-  this.scene.translate(0, 0.5, 0);
-  this.scene.rotate(-Math.PI/2, 1, 0, 0);
-  this.quad.display();
+    this.scene.translate(0, 0.5, 0);
+    this.scene.rotate(-Math.PI/2, 1, 0, 0);
+    this.quad.display();
   this.scene.popMatrix();
-
 };
