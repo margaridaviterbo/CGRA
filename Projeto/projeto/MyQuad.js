@@ -1,5 +1,5 @@
 /**
- * MyObject
+ * MyQuad
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
@@ -10,7 +10,7 @@ function MyQuad(scene, minS, maxS, minT, maxT) {
 	this.maxS = maxS || 1;
 	this.minT = minT || 0;
 	this.maxT = maxT || 1;
-	
+
 	this.initBuffers();
 
 };
@@ -40,11 +40,11 @@ MyQuad.prototype.initBuffers = function () {
 
 	this.texCoords = [
 		this.minS, this.maxT,
-		this.maxS, this.maxT,	
+		this.maxS, this.maxT,
 		this.minS, this.minT,
 		this.maxS, this.minT
 	];
-	
+
 	this.primitiveType=this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
 };
