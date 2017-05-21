@@ -70,9 +70,10 @@ LightingScene.prototype.init = function(application) {
 
 	this.postAppearance = new CGFappearance(this);
 	this.postAppearance.setAmbient(0.3, 0.3, 0.3, 1);
-	this.postAppearance.setDiffuse(0.7, 0.5, 0.2, 1);
+	this.postAppearance.setDiffuse(0.9254, 0.8117, 0.5490, 1);
 	this.postAppearance.setSpecular(0.7, 0.7, 0.7, 1);
 	this.postAppearance.setShininess(200);
+    this.postAppearance.loadTexture('../resources/images/column.png');
 
 	//board B
 	this.boardAppearance = new CGFappearance(this);
