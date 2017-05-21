@@ -199,7 +199,7 @@ LightingScene.prototype.removeTarget = function(){
 	if (this.destroy){
 		this.targets.shift();
 		this.torpedos.pop();
-		this.torpedos.push(new MyTorpedo(this, this.submarine.positionX, this.submarine.positionY-1, this.submarine.positionZ, this.submarine.rotationAngle));
+		this.torpedos.push(new MyTorpedo(this, this.submarine.positionX, this.submarine.positionY-1, this.submarine.positionZ, this.submarine.rotationAngle, this.submarine.rotationAngle3));
 
 		this.destroy = false;
 	}
