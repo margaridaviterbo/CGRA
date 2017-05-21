@@ -26,19 +26,19 @@
 
   for (var i = 0; i <= this.stacks; i++) {
     for (var j = 0; j < this.slices; j++){
-      this.vertices.push(Math.cos(j*angularStep), 
-                         Math.sin(j*angularStep), 
+      this.vertices.push(Math.cos(j*angularStep),
+                         Math.sin(j*angularStep),
                          i/this.stacks);
 
-      this.vertices.push(Math.cos((j+1)*angularStep), 
+      this.vertices.push(Math.cos((j+1)*angularStep),
                          Math.sin((j+1)*angularStep),
                          i/this.stacks);
 
-      this.normals.push(Math.cos((j+1)*(angularStep/2)), 
-                        Math.sin((j+1)*(angularStep/2)), 
+      this.normals.push(Math.cos((j+1)*(angularStep/2)),
+                        Math.sin((j+1)*(angularStep/2)),
                         0);
-      this.normals.push(Math.cos((j+2)*(angularStep/2)), 
-                        Math.sin((j+2)*(angularStep/2)), 
+      this.normals.push(Math.cos((j+2)*(angularStep/2)),
+                        Math.sin((j+2)*(angularStep/2)),
                         0);
 
       this.texCoords.push(s, t);
@@ -58,8 +58,6 @@
     }
   }
 
-
-
-     	this.primitiveType = this.scene.gl.TRIANGLES;
-     	this.initGLBuffers();
-     };
+  this.primitiveType = this.scene.gl.TRIANGLES;
+  this.initGLBuffers();
+ };

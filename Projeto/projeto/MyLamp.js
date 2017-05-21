@@ -33,8 +33,6 @@
     }
   }
 
-
-
   for (var i = 0; i < this.stacks; i++) {
     for (var j = 0; j < this.slices; j++) {
 
@@ -56,8 +54,6 @@
     }
   }
 
-
-
-     	this.primitiveType = this.scene.gl.TRIANGLES;
-     	this.initGLBuffers();
-     };
+  this.primitiveType = this.scene.gl.TRIANGLES;
+  this.initGLBuffers();
+ };

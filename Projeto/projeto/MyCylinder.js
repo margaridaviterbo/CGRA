@@ -25,7 +25,6 @@
   var s = 0, t = 0;
 
   for (var i = 0; i <= this.stacks; i++) {
-
     for (var j = 0; j < this.slices; j++) {
       this.vertices.push(Math.cos(j * angularStep),
                          Math.sin(j * angularStep),
@@ -41,7 +40,6 @@
     s = 0;
     t += 1 / this.stacks;
   }
-
 
   for (var i = 0; i < this.stacks; i++) {
     for (var j = 0; j < this.slices; j++) {

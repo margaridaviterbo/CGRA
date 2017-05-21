@@ -1,5 +1,5 @@
 /**
- * MyPrism
+ * MyCylinderInsideOut
  * @constructor
  */
  function MyCylinderInsideOut(scene, slices, stacks) {
@@ -25,10 +25,9 @@
   var s = 0, t = 0;
 
   for (var i = 0; i <= this.stacks; i++) {
-
     for (var j = 0; j < this.slices; j++) {
       this.vertices.push(Math.cos(j * angularStep),
-                         Math.sin(j * angularStep), 
+                         Math.sin(j * angularStep),
                          i / this.stacks);
 
       this.normals.push(Math.cos(j * angularStep),
@@ -56,7 +55,7 @@
 
   for (var i = 0; i < this.stacks; i++) {
     for (var j = 0; j < this.slices; j++) {
-      this.indices.push(i * this.slices + (j + 1) % this.slices + this.slices, 
+      this.indices.push(i * this.slices + (j + 1) % this.slices + this.slices,
                         i * this.slices + (j + 1) % this.slices,
                         i * this.slices + j
                        );
