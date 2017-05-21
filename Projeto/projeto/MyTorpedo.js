@@ -210,7 +210,7 @@ MyTorpedo.prototype.update = function(currTime){
     var dif = currTime - this.timePassed;
 
     if(this.bezierAnimation){
-        var finalAngle = this.calculateRotationAngle();
+        //var finalAngle = this.calculateRotationAngle();
         var direction = this.direction;
 
         if(this.t <= 1){
@@ -228,7 +228,7 @@ MyTorpedo.prototype.update = function(currTime){
             var n1 = Math.sqrt(vector[1]*vector[1] + vector[2]*vector[2]);
             var n2 = Math.sqrt(direction[1]*direction[1] + direction[2]*direction[2]);
             var cos = escalar / (n1*n2);
-            this.orientation += finalAngle/(this.animationTime*10);
+            this.orientation += (Math.PI/2-this.verticalRotAngle)/(this.animationTime*10);
 
             var escalar = vector[0]*direction[0] + vector[2]*direction[2];
             var n1 = Math.sqrt(vector[0]*vector[0] + vector[2]*vector[2]);
