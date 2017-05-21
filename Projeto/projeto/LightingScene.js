@@ -199,7 +199,7 @@ LightingScene.prototype.removeTarget = function(){
 	if (this.destroy){
 		this.targets.shift();
 		this.torpedos.pop();
-		this.torpedos.push(new MyTorpedo(this, this.submarine.positionX, this.submarine.positionY-1, this.submarine.positionZ, this.submarine.rotationAngle));
+		this.torpedos.push(new MyTorpedo(this, this.submarine.positionX, this.submarine.positionY-1, this.submarine.positionZ, this.submarine.rotationAngle, this.submarine.rotationAngle3));
 
 		this.destroy = false;
 	}
@@ -264,7 +264,7 @@ LightingScene.prototype.display = function() {
 
 			this.translate(this.torpedos[0].positionX, this.torpedos[0].positionY, this.torpedos[0].positionZ);
 			this.rotate(this.torpedos[0].horizontalRotAngle, 0, 1, 0);
-			this.rotate(this.torpedos[0].verticalRotAngle, 1, 0, 0);
+			this.rotate(this.torpedos[0].orientation, 1, 0, 0);
 			this.torpedos[0].display();
 		}
 
