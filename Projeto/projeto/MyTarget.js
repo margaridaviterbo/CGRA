@@ -34,19 +34,19 @@ MyTarget.prototype.display = function(){
     this.scene.rotate(-Math.PI/2, 1, 0, 0);
     this.scene.scale(0.5, 0.5, 0.2);
 
-    //cilindro
+    //cylinder
     this.scene.pushMatrix();
         this.blackAppearance.apply();
         this.cylinder.display();
     this.scene.popMatrix();
 
-    //face tras
+    //back face
     this.scene.pushMatrix();
         this.scene.rotate(Math.PI, 0, 1, 0);
         this.base.display();
     this.scene.popMatrix();
 
-    //face frente
+    //front face
     this.scene.pushMatrix();
         this.scene.translate(0, 0, 1);
         this.targetAppearance.apply();
