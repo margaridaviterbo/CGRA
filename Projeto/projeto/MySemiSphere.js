@@ -28,13 +28,13 @@
 	for(var j = 0; j <= this.stacks; j++){
 		for(var i = 0; i <= this.slices; i++){
 
-			//lampada com z máximo igual a 1
+			//maxZ = 1
 			z = j / this.stacks;
 
-			//com o aumento de z, diminui o radius
-      radius = Math.cos(Math.asin(z));
+			//radius decreases with Z increase
+            radius = Math.cos(Math.asin(z));
 
-			//x e y dependem do radius
+			//x and y coordinates depend on the radius
 			x = Math.cos(i * 2*Math.PI / this.slices) * radius;
 			y = Math.sin(i * 2*Math.PI / this.slices) * radius;
 
@@ -57,5 +57,4 @@
 
  	this.primitiveType = this.scene.gl.TRIANGLES;
  	this.initGLBuffers();
-
 };

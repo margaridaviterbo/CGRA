@@ -16,21 +16,15 @@
     this.horizontalRotAngle = horizontalAngle || 0;
     this.verticalRotAngle = verticalAngle || 0;
     this.orientation = 0;
-
     this.direction = [0, 0, 1];
-
     this.enableUpdate = true;
-
     this.attached = true;
-
     this.bezierAnimation = false;
-
     this.animationTime;
     this.P2;
     this.P3;
     this.P4;
     this.t=0;
-
     this.timePassed;
 
     this.metalAppearance = new CGFappearance(scene);
@@ -44,25 +38,28 @@
 MyTorpedo.prototype = Object.create(CGFobject.prototype);
 MyTorpedo.prototype.constructor = MyTorpedo;
 
+/*
+* function to draw torpedo
+*/
 MyTorpedo.prototype.display = function(){
 
     this.metalAppearance.apply();
 
-    //cilindro principal
+    //main cylinder
     this.scene.pushMatrix();
         this.scene.translate(0, 0, -0.5);
         this.scene.scale(1/5, 1/5, 1);
         this.cylinder.display();
     this.scene.popMatrix();
 
-    //semiEsfera frontal
+    //frontal sphere
     this.scene.pushMatrix();
         this.scene.translate(0, 0, 0.5);
         this.scene.scale(1/5, 1/5, 1/4);
         this.semiSphere.display();
     this.scene.popMatrix();
 
-    //semiEsfera traseira
+    //back sphere
     this.scene.pushMatrix();
         this.scene.translate(0, 0, -0.5);
         this.scene.rotate(Math.PI, 0, 1, 0);
@@ -70,13 +67,13 @@ MyTorpedo.prototype.display = function(){
         this.semiSphere.display();
     this.scene.popMatrix();
 
-    //trapezio tras horizontal
+    //back horizontal rudder
     this.scene.pushMatrix();
         this.scene.translate(0, 0, -0.5);
         this.trapezium.display();
     this.scene.popMatrix();
 
-    //trapezio tras vertical
+    //back vertical rudder
     this.scene.pushMatrix();
         this.scene.translate(0, 0, -0.5);
         this.scene.rotate(Math.PI/2, 0, 0, 1);
@@ -85,16 +82,21 @@ MyTorpedo.prototype.display = function(){
 
 }
 
+/**
+* funtion to update torpedo's position
+*/
 MyTorpedo.prototype.updatePosition = function(posX, posY, posZ){
 
     if (this.enableUpdate){
-
         this.positionX = posX;
         this.positionY = posY - 1.1;
         this.positionZ = posZ;
     }
 }
 
+/*
+* auxiliar function
+*/
 MyTorpedo.prototype.calculateVector = function(){
 
     this.P4 = [this.scene.targets[0].positionX,
@@ -108,12 +110,14 @@ MyTorpedo.prototype.calculateVector = function(){
     return vector;
 }
 
+/*
+* function to calculate the rotation angle of the torpedo when doing the bezier curve
+*/
 MyTorpedo.prototype.calculateRotationAngle = function(){
 
     //calculate angle between vector and origin ("z")
     var vector = this.calculateVector();
 
-    //cos(ang) = vector1 * vector2 / (normal(vector1) * normal(vector2));
     var n1 = Math.sqrt(vector[0]*vector[0] + vector[2] * vector[2]);
     var cos = vector[2] / n1;
     var angle = Math.acos(cos);
@@ -125,23 +129,24 @@ MyTorpedo.prototype.calculateRotationAngle = function(){
 
 }
 
+/**
+* auxiliar function
+*/
 MyTorpedo.prototype.calculateDistance = function(){
-
     var vector = this.calculateVector();
-
     return Math.sqrt(vector[0]*vector[0] + vector[2] * vector[2]);
-
 }
 
+/*
+* function to calculate the direction of the torpedo when doing the bezier curve
+*/
 MyTorpedo.prototype.calculateDirection = function(){
 
     var vectorHorizontal = [Math.sin(this.horizontalRotAngle), 0, Math.cos(this.horizontalRotAngle)];
     var vectorVertical = [0, Math.sin(-this.verticalRotAngle), Math.cos(-this.verticalRotAngle)];
 
     var final = [vectorHorizontal[0] + vectorVertical[0], vectorHorizontal[1] + vectorVertical[1], vectorHorizontal[2] + vectorVertical[2]];
-
     var distance = Math.sqrt(final[0]*final[0] + final[1]*final[1] + final[2]*final[2]);
-
     var angle = Math.PI/2+this.verticalRotAngle;
 
     var direction = [
@@ -150,21 +155,18 @@ MyTorpedo.prototype.calculateDirection = function(){
         Math.sin(angle) * Math.cos(this.horizontalRotAngle)
     ];
 
-    //console.log(this.horizontalRotAngle);
-
     this.direction = direction;
 
     return direction;
 }
 
+/*
+* function to calculate bezier points
+*/
 MyTorpedo.prototype.calculateBezierPoints = function(){
 
     var direction = this.calculateDirection();
-
     var vector = this.calculateVector();
-
-    //console.log("direction: " + direction[0] + " " + direction[1] + " " + direction[2]);
-    //console.log("position: " + this.positionX + " " + this.positionY + " " + this.positionZ);
 
     this.P2 = [
         this.positionX + direction[0] * 6,
@@ -172,16 +174,17 @@ MyTorpedo.prototype.calculateBezierPoints = function(){
         this.positionZ + direction[2] * 6,
     ];
 
-    //console.log("p2: " + this.P2[0] + " " + this.P2[1] + " " + this.P2[2]);
-
     this.P3 = [
         this.scene.targets[0].positionX,
         this.positionY + 3,
         this.scene.targets[0].positionZ
     ];
-
 }
 
+
+/**
+* function called when key 'F' is pressed so that the torpedo is launched
+*/
 MyTorpedo.prototype.animate = function(){
 
     if (this.scene.targets.length == 0)
@@ -194,83 +197,44 @@ MyTorpedo.prototype.animate = function(){
 
     this.bezierAnimation = true;
     this.timePassed = 0;
-
     var distance = this.calculateDistance();
     this.animationTime = parseInt(distance);
-
     this.calculateBezierPoints();
-
 }
 
+/*
+* function to update torpedo's position throw time
+*/
 MyTorpedo.prototype.update = function(currTime){
 
     var dif = currTime - this.timePassed;
 
     if(this.bezierAnimation){
-
         var finalAngle = this.calculateRotationAngle();
-
         var direction = this.direction;
 
         if(this.t <= 1){
-
             var oldPosition = [this.positionX, this.positionY, this.positionZ];
-
             var t = this.t;
 
             this.positionX = Math.pow((1-t), 3) * this.positionX + 3*Math.pow((1-t), 2) * t * this.P2[0] + 3*(1-t) * Math.pow(t, 2) * this.P3[0] + Math.pow(t, 3) * this.P4[0];
-
             this.positionY = Math.pow((1-t), 3) * this.positionY + 3*Math.pow((1-t), 2) * t * this.P2[1] + 3*(1-t) * Math.pow(t, 2) * this.P3[1] + Math.pow(t, 3) * this.P4[1];
-
             this.positionZ = Math.pow((1-t), 3) * this.positionZ + 3*Math.pow((1-t), 2) * t * this.P2[2] + 3*(1-t) * Math.pow(t, 2) * this.P3[2] + Math.pow(t, 3) * this.P4[2];
 
             this.t += 1/(this.animationTime * 10);
-
             var vector = [this.positionX - oldPosition[0], this.positionY - oldPosition[1], this.positionZ - oldPosition[2]];
-            //var verticalVector = [this.positionY - oldPosition[1], this.positionZ - oldPosition[2]];
-
-
 
             var escalar = vector[1]*direction[1] + vector[2]*direction[2];
-            //console.log(escalar);
-
             var n1 = Math.sqrt(vector[1]*vector[1] + vector[2]*vector[2]);
             var n2 = Math.sqrt(direction[1]*direction[1] + direction[2]*direction[2]);
             var cos = escalar / (n1*n2);
-            //console.log(n1*n2);
-            //console.log(cos);
-            //this.verticalRotAngle = Math.acos(cos);  //angulo com y
             this.orientation += finalAngle/(this.animationTime*10);
-            //console.log(this.verticalRotAngle);
-
 
             var escalar = vector[0]*direction[0] + vector[2]*direction[2];
-            //console.log(direction);
-
-            //console.log("esce" + escalar);
             var n1 = Math.sqrt(vector[0]*vector[0] + vector[2]*vector[2]);
             var n2 = Math.sqrt(direction[0]*direction[0] + direction[2]*direction[2]);
             var cos = escalar / (n1*n2);
-            //console.log(n1*n2);
-            //console.log(cos);
-
-                this.horizontalRotAngle = Math.acos(cos); //angulo com z
-
-
-
-
-            //console.log(this.horizontalRotAngle);
-/*
-            var escalar = direction[0]*newDirection[0] + direction[1]*newDirection[1] + direction[2]*newDirection[2];
-            var n1 = Math.sqrt(direction[0]*direction[0] + direction[1]*direction[1] + direction[2]*direction[2]);
-            var n2 = Math.sqrt(newDirection[0]*newDirection[0] + newDirection[1]*newDirection[1] + newDirection[2]*newDirection[2]);
-            var cos = escalar / (n1*n2);
-            var newAngle = Math.acos(cos);
-*/
-
-
-            //this.horizontalRotAngle += finalAngle/(this.animationTime * 10);
-
+            this.horizontalRotAngle = Math.acos(cos); //angulo com z
         }
         else{
             this.bezierAnimation = false;

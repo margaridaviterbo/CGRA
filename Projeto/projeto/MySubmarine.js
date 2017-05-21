@@ -1,5 +1,5 @@
 /**
- * MyClock
+ * MySubmarine
  * @constructor
  */
  function MySubmarine(scene) {
@@ -14,7 +14,6 @@
     this.trapezium = new MyTrapezium(scene);
 
 	this.currSubmarineAppearance;
-
     this.bodyTextures = [];
 
     this.submarineAppearenceMetal = new CGFappearance(scene);
@@ -58,12 +57,6 @@
 	this.bodyTextures[2] = this.submarineAppearenceCoral;
     this.bodyTextures[3] = this.submarineAppearenceFish;
 
-    //this.rotationAngle = Math.PI*4/5;
-
-    //this.positionX = 5;
-    //this.positionY = 3;
-    //this.positionZ = 5;
-
     this.positionX = 0;
     this.positionY = 3;
     this.positionZ = 0;
@@ -72,12 +65,14 @@
     this.rotationAngle2 = 0;
     this.rotationAngle3 = 0; //Vertical angle
     this.rotationAngle4 = 0;
-
 };
 
 MySubmarine.prototype = Object.create(CGFobject.prototype);
 MySubmarine.prototype.constructor = MySubmarine;
 
+/**
+* auxiliar function to change submarines texture
+*/
 MySubmarine.prototype.changeTexture = function(){
 
 	if (this.scene.textures == 'Metal') {
@@ -94,6 +89,9 @@ MySubmarine.prototype.changeTexture = function(){
 	}
 };
 
+/**
+* function to rotate submarine (and torpedo) so that it changes direction in XoZ plan
+*/
 MySubmarine.prototype.rotate = function(orientation){
 
     this.rotationAngle += Math.PI / 180 * orientation * this.scene.speed;
@@ -105,13 +103,18 @@ MySubmarine.prototype.rotate = function(orientation){
     if (this.scene.torpedos[0].enableUpdate && !isNaN(this.rotationAngle)){
         this.scene.torpedos[0].horizontalRotAngle = this.rotationAngle;
     }
-    console.log(this.rotationAngle);
 }
 
+/*
+* function to reset rudder's angle so that it returns to initial position when key 'A' or 'D' are up
+*/
 MySubmarine.prototype.resetRotationAngle2 = function(){
     this.rotationAngle2 = 0;
 }
 
+/**
+* function to rotate submarine (and torpedo) so that it changes direction in YoZ plan
+*/
 MySubmarine.prototype.rotateVertically = function(orientation){
 
     this.rotationAngle3 += Math.PI / 180 * orientation * this.scene.speed;
@@ -122,28 +125,33 @@ MySubmarine.prototype.rotateVertically = function(orientation){
     if (this.scene.torpedos[0].enableUpdate && !isNaN(this.rotationAngle3)){
         this.scene.torpedos[0].verticalRotAngle = this.rotationAngle3;
     }
-    //console.log(this.scene.torpedos[0].verticalRotAngle);
 }
 
-
+/*
+* function to reset rudder's angle so that it returns to initial position when key 'Q' or 'E' are up
+*/
 MySubmarine.prototype.resetRotationAngle4 = function(){
     this.rotationAngle4 = 0;
 }
 
+/*
+* auxiliar function
+*/
 MySubmarine.prototype.calculateSumVectors = function(){
 
     var vectorHorizontal = [Math.sin(this.rotationAngle), 0, Math.cos(this.rotationAngle)];
     var vectorVertical = [0, Math.sin(-this.rotationAngle3), Math.cos(-this.rotationAngle3)];
-
     var final = [vectorHorizontal[0] + vectorVertical[0], vectorHorizontal[1] + vectorVertical[1], vectorHorizontal[2] + vectorVertical[2]];
 
     return final;
 }
 
+/*
+* function called when keys 'W' and 'S' are pressed to move submarine
+*/
 MySubmarine.prototype.move = function(direction){
 
     var aux = this.calculateSumVectors();
-
     var angle = Math.PI/2+this.rotationAngle3;
 
     var direction = [
@@ -164,6 +172,10 @@ MySubmarine.prototype.move = function(direction){
     this.scene.torpedos[0].updatePosition(this.positionX, this.positionY, this.positionZ);
 }
 
+
+/*
+* function increases submarine velocity
+*/
 MySubmarine.prototype.increaseVelocity = function(){
 
     if (this.scene.speed >= 5){
@@ -174,6 +186,9 @@ MySubmarine.prototype.increaseVelocity = function(){
     }
 }
 
+/*
+* function decreases submarine velocity
+*/
 MySubmarine.prototype.decreaseVelocity = function(){
     if (this.scene.speed <= -5){
         this.scene.speed = -5;
@@ -183,25 +198,28 @@ MySubmarine.prototype.decreaseVelocity = function(){
     }
 }
 
+/*
+* function to keep position updated with time passed
+*/
 MySubmarine.prototype.update = function(currTime){
 
     var dif = currTime - this.timePassed;
-
     var angle = dif * 2 * Math.PI * 60/ 1000;
 
     this.propeller1.setAngle(angle, 1);
     this.propeller2.setAngle(angle, -1);
 
     this.timePassed = currTime;
-
     var dif = currTime - this.timePassed;
 
 };
 
-
+/*
+* function that draws submarine
+*/
 MySubmarine.prototype.display = function(){
 
-    //cilindro principal
+    //main cylinder
     this.scene.pushMatrix();
         this.scene.translate(0, 0, -2.04);
         this.scene.rotate(Math.PI, 0, 0, 1);
@@ -210,8 +228,7 @@ MySubmarine.prototype.display = function(){
         this.cylinder.display();
     this.scene.popMatrix();
 
-    //0.92 / 2 = 0.46
-    //semiEsfera frontal
+    //front semisphere
     this.scene.pushMatrix();
         this.scene.translate(0, 0, 2.04);
         this.scene.scale(0.73/2, 1/2, 0.46);
@@ -224,7 +241,7 @@ MySubmarine.prototype.display = function(){
         this.semiSphere.display();
     this.scene.popMatrix();
 
-    //semiEsfera traseira
+    //back semisphere
     this.scene.pushMatrix();
         this.scene.translate(0, 0, -2.04);
         this.scene.rotate(Math.PI, 0, 1, 0);
@@ -238,7 +255,7 @@ MySubmarine.prototype.display = function(){
         this.semiSphere.display();
     this.scene.popMatrix();
 
-    //cilindro cima
+    //upper cylinder
     this.scene.pushMatrix();
         this.scene.translate(0, 0.57/2, 0.88/2);
         this.scene.scale(0.60/2, 0.57, 0.88/2);
@@ -251,7 +268,7 @@ MySubmarine.prototype.display = function(){
         }
         this.cylinder.display();
 
-        //tampo cilindro cima
+        //upper face
         this.scene.pushMatrix();
             this.scene.translate(0, 0, 1);
             if(this.currSubmarineAppearance == 3){
@@ -264,7 +281,7 @@ MySubmarine.prototype.display = function(){
         this.scene.popMatrix();
     this.scene.popMatrix();
 
-    //periscopio
+    //periscope
     this.scene.pushMatrix();
         this.scene.translate(0, 0.155 + this.periscope.positionY, 0);
         if(this.currSubmarineAppearance == 3){
@@ -276,7 +293,7 @@ MySubmarine.prototype.display = function(){
         this.periscope.display();
     this.scene.popMatrix();
 
-    //helice direita
+    //right propeller
     this.scene.pushMatrix();
         this.scene.translate(0.73/2+0.4/2, -0.25, -2.04);
         this.scene.scale(0.4/2, 0.4/2, 0.4);
@@ -290,7 +307,7 @@ MySubmarine.prototype.display = function(){
         this.propeller1.display();
     this.scene.popMatrix();
 
-    //helice esquerda
+    //left propeller
     this.scene.pushMatrix();
         this.scene.translate(-0.73/2-0.4/2, -0.25, -2.04);
         this.scene.scale(0.4/2, 0.4/2, 0.4);
@@ -305,7 +322,7 @@ MySubmarine.prototype.display = function(){
         this.propeller2.display();
     this.scene.popMatrix();
 
-    //trapezio tras horizontal
+    //back horizontal rudder
     this.scene.pushMatrix();
         this.scene.translate(0, 0, -2.04);
         this.scene.rotate(this.rotationAngle4, 1, 0, 0);
@@ -319,7 +336,7 @@ MySubmarine.prototype.display = function(){
         this.trapezium.display();
     this.scene.popMatrix();
 
-    //trapezio tras vertical
+    //back vertical rudder
     this.scene.pushMatrix();
         this.scene.translate(0, 0, -2.04);
         this.scene.rotate(Math.PI/2, 0, 0, 1);
@@ -334,7 +351,7 @@ MySubmarine.prototype.display = function(){
         this.trapezium.display();
     this.scene.popMatrix();
 
-    //trapezio frente
+    //front rudder
     this.scene.pushMatrix();
         this.scene.translate(0, 0.7, 0.5);
         this.scene.rotate(Math.PI, 1, 0, 0);
