@@ -16,7 +16,7 @@
     this.horizontalRotAngle = horizontalAngle || 0;
     this.verticalRotAngle = verticalAngle || 0;
     this.orientation = 0;
-    this.direction = [0, 0, 1];
+    this.direction = this.calculateDirection();
     this.enableUpdate = true;
     this.attached = true;
     this.bezierAnimation = false;
