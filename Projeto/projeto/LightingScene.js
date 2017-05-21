@@ -70,18 +70,10 @@ LightingScene.prototype.init = function(application) {
 
 	this.postAppearance = new CGFappearance(this);
 	this.postAppearance.setAmbient(0.3, 0.3, 0.3, 1);
-	this.postAppearance.setDiffuse(0.9254, 0.8117, 0.5490, 1);
+	this.postAppearance.setDiffuse(0.98, 0.87, 0.6, 1);
 	this.postAppearance.setSpecular(0.7, 0.7, 0.7, 1);
 	this.postAppearance.setShininess(200);
-    this.postAppearance.loadTexture('../resources/images/column.png');
-
-	//board B
-	this.boardAppearance = new CGFappearance(this);
-	this.boardAppearance.setAmbient(0.3,0.3,0.3,1);
-	this.boardAppearance.setDiffuse(0.4,0.4,0.4,1);
-	this.boardAppearance.setSpecular(0.3,0.3,0.7,1);
-	this.boardAppearance.setShininess(200);
-	this.boardAppearance.loadTexture('../resources/images/board.png');
+    this.postAppearance.loadTexture('../resources/images/column.jpg');
 
 	this.setUpdatePeriod(100);
 };
